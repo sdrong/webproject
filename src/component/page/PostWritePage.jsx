@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TextInput from "../ui/TextInput";
 import Button from "../ui/Button";
+import Editor from "../ui/Editor";
 
 const Wrapper = styled.div`
     padding: 16px;
@@ -51,9 +52,9 @@ function PostWritePage(props) {
                     }}
                 />
                 <Mkproblem>
-                    <Mkproblem contenteditable="true"/>
+                    <Editor/>
                     <input></input>
-                    <Mkproblem contenteditable="true"/>
+                    <Editor/>
                 </Mkproblem>
                 <Button
                     title="문제 작성하기"
