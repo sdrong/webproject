@@ -22,17 +22,19 @@ const TitleText = styled.p`
     font-weight: 500;
 `;
 const SomeContent = styled.p`
-    font-size: 13px;
+    font-size: 13px;np
     font-weight: 300;
 `;
 
 function PostListItem(props) {
     const { post, onClick } = props;
-
+    const str = post.content;
+    const regex = /\$%&/g;
+    const result = str.split(regex); // 
     return (
         <Wrapper onClick={onClick}>
             <TitleText>{post.title}</TitleText>
-            <SomeContent>{post.content}</SomeContent>
+            <SomeContent>{result[0]+"???"+result[2]}</SomeContent>
         </Wrapper>
     );
 }

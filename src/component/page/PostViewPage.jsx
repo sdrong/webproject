@@ -51,13 +51,17 @@ const CommentLabel = styled.p`
 
 function PostViewPage(props) {
     const navigate = useNavigate();
-    const { problemId } = useParams();
+    const { problemId } = useParams(); //데이터 받는거
     console.log(problemId);
     const problemIdInt = parseInt(problemId, 10);
-    const post = data.find((item) => {
+    const post = data.find((item) => { //쓸 데이터id 찾기
         return item.id === problemIdInt;
       });
     const [answer, setAnswer] = useState("");
+    const str = post.content;
+    const regex = /\$%&/g;
+    const result = str.split(regex); // 컨텐츠 분할
+    const anw = result[1]; // 답 저장
     return (
         <Wrapper>
             <Container>
@@ -69,7 +73,7 @@ function PostViewPage(props) {
                 />
                 <PostContainer>
                     <TitleText>{post.title}</TitleText>
-                    <ContentText>{post.content}</ContentText>
+                    <ContentText>{result[0]+"???"+result[2]}</ContentText>
                 </PostContainer>
                 <CommentLabel>정답 맞춰보기</CommentLabel>
                 <AnswerList>answers = {post.answers}</AnswerList>
@@ -88,6 +92,8 @@ function PostViewPage(props) {
                 navigate("/");
                 }}
                 />
+                <h4>result:</h4> 
+                
             </Container>
         </Wrapper>
     );
