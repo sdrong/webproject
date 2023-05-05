@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+
 import styled from "styled-components";
 import MainList from "../list/MainList";
 import categoryData from "../../categoryData.json"
@@ -28,7 +28,6 @@ const Container = styled.div`
 `;
 
 function MainPage(props) {
-    const { postId } = useParams();
     const navigate = useNavigate();
     return (
         <Wrapper>

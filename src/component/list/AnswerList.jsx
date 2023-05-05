@@ -1,0 +1,30 @@
+import React from "react";
+import styled from "styled-components";
+import AnswerListItem from "./AnswerListItem";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  & > * {
+    :not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+`;
+
+function AnswerList(props) {
+  const { comments } = props;
+
+  return (
+    <Wrapper>
+      {comments &&
+        comments.map((comment, index) => {
+          return <AnswerListItem key={comment.id} comment={comment} />;
+        })}
+    </Wrapper>
+  );
+}
+
+export default AnswerList;

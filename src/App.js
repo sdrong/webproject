@@ -24,7 +24,7 @@ function App(props) {
             <Routes>
                 <Route index element={<MainPage />} />
                 <Route path="main/:mainId" element={<PostPage />} />
-                <Route path="post-write" element={<PostWritePage />} />
+                <Route path="post-write/:writeId" element={<PostWritePage />} />
                 <Route path="post/:problemId" element={<PostViewPage />} />
             </Routes>
         </BrowserRouter>

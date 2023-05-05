@@ -4,7 +4,8 @@ import styled from "styled-components";
 import CommentList from "../list/CommentList";
 import TextInput from "../ui/TextInput";
 import Button from "../ui/Button";
-import data from "../../data.json"; // 수정된 부분
+import data from "../../data.json";
+import AnswerList from "../list/AnswerList";
 
 const Wrapper = styled.div`
     padding: 16px;
@@ -56,20 +57,37 @@ function PostViewPage(props) {
     const post = data.find((item) => {
         return item.id === problemIdInt;
       });
-
+    const [answer, setAnswer] = useState("");
     return (
         <Wrapper>
             <Container>
                 <Button
                     title="뒤로 가기"
                     onClick={() => {
-                        navigate("/");
+                        navigate(`/main/${post.category.id}`);
                     }}
                 />
                 <PostContainer>
                     <TitleText>{post.title}</TitleText>
                     <ContentText>{post.content}</ContentText>
                 </PostContainer>
+                <CommentLabel>정답 맞춰보기</CommentLabel>
+                <AnswerList>answers = {post.answers}</AnswerList>
+
+                <TextInput
+                    height={40}
+                    value={answer}
+                    onChange={(event) => {
+                    setAnswer(event.target.value);
+                }}
+                />
+
+                <Button
+                title="정답 제출"
+                onClick={() => {
+                navigate("/");
+                }}
+                />
             </Container>
         </Wrapper>
     );

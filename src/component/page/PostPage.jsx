@@ -42,14 +42,13 @@ function PostPage(props) {
         <Button
           title="글 작성하기"
           onClick={() => {
-            navigate("/post-write");
-          }}
-        />
+          navigate(`/post-write/${mainIdInt}`);
+        }}
+/>
 
         <PostList
           posts={postList}
           onClickItem={(item) => {
-            console.log(item.id);
             navigate('/post/' + item.id);
           }}
         />
