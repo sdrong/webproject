@@ -32,7 +32,6 @@ const Mkproblem = styled.div`
     border-radius: 4px;
 `;
 
-
 function PostWritePage(props) {
     const navigate = useNavigate();
 
