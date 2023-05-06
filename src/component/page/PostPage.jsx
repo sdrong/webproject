@@ -31,7 +31,7 @@ function PostPage(props) {
   const navigate = useNavigate();
   const { mainId } = useParams();
   const mainIdInt = parseInt(mainId, 10);
-  const postList = data.filter((item) => {
+  const postList = data.filter((item) => { //과목 id와 문제의 카테고리 안 id를 비교해서 list형태로 저장
     return item.category.id ===  mainIdInt
   });
 
@@ -39,6 +39,12 @@ function PostPage(props) {
   return (
     <Wrapper>
       <Container>
+        <Button
+          title="뒤로 가기"
+          onClick={() => {
+          navigate(`/categories`);
+          }}
+          />
         <Button
           title="글 작성하기"
           onClick={() => {
@@ -49,7 +55,7 @@ function PostPage(props) {
         <PostList
           posts={postList}
           onClickItem={(item) => {
-            navigate('/post/' + item.id);
+            navigate('/problems/' + item.id);
           }}
         />
       </Container>

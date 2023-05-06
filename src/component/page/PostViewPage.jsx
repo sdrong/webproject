@@ -57,18 +57,36 @@ function PostViewPage(props) {
     const post = data.find((item) => { //쓸 데이터id 찾기
         return item.id === problemIdInt;
       });
-    const [answer, setAnswer] = useState("");
-    const str = post.content;
-    const regex = /\$%&/g;
+    const [answer, setAnswer] = useState(""); //text area의 anwser 가져오는거
+    const str = post.content; //글을 가져오고
+    const regex = /\$%&123/g;  //파싱을 조건
     const result = str.split(regex); // 컨텐츠 분할
     const anw = result[1]; // 답 저장
+    const [resultText, setResultText] = useState("");  //정답유무
+    const handleAnswerSubmit = () => {
+        if (answer === anw) {
+          setResultText("정답입니다!");
+        } else {
+          setResultText("틀렸습니다.");
+        }
+      };
+      const [showAnswer, setShowAnswer] = useState(false); 
+    const Result = styled.h4`
+    margin: 16px 0;
+    font-size: 20px;
+    `;
+    const [buttonTitle, setButtonTitle] = useState("정답 보기");
+const toggleShowAnswer = () => {
+    setShowAnswer(!showAnswer);
+    setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
+};
     return (
         <Wrapper>
             <Container>
                 <Button
                     title="뒤로 가기"
                     onClick={() => {
-                        navigate(`/main/${post.category.id}`);
+                        navigate(`/categories/${post.category.id}/problems`);
                     }}
                 />
                 <PostContainer>
@@ -86,15 +104,13 @@ function PostViewPage(props) {
                 }}
                 />
 
-                <Button
-                title="정답 제출"
-                onClick={() => {
-                navigate("/");
-                }}
-                />
-                <h4>result:</h4> 
+                <Button title="정답 제출" onClick={handleAnswerSubmit} />
+                <h4>result: {resultText}</h4>
                 
-            </Container>
+                <Button title={buttonTitle} onClick={toggleShowAnswer} />
+                {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
+                
+                </Container>
         </Wrapper>
     );
 }

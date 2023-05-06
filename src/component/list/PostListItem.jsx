@@ -29,7 +29,7 @@ const SomeContent = styled.p`
 function PostListItem(props) {
     const { post, onClick } = props;
     const str = post.content;
-    const regex = /\$%&/g;
+    const regex = /\$%&123/g;
     const result = str.split(regex); // 
     return (
         <Wrapper onClick={onClick}>

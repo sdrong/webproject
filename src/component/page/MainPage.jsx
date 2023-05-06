@@ -33,9 +33,9 @@ function MainPage(props) {
         <Wrapper>
             <Container>
                 <MainList
-                    posts={categoryData}
+                    posts={categoryData}  //과목 목록
                     onClickItem={(item) => {
-                        navigate(`/main/${item.id}`);
+                        navigate(`/categories/${item.id}/problems`); 
                     }}
                 />
             </Container>

@@ -2,7 +2,8 @@ import React from "react";
 import {
     BrowserRouter,
     Routes,
-    Route
+    Route,
+    NavLink
 } from "react-router-dom";
 import styled from "styled-components";
 // Pages
@@ -11,21 +12,24 @@ import PostPage from "./component/page/PostPage";
 import PostWritePage from './component/page/PostWritePage';
 import PostViewPage from './component/page/PostViewPage';
 
-const MainTitleText = styled.p`
+const MainTitleText = styled(NavLink)`
     font-size: 24px;
     font-weight: bold;
     text-align: center;
+    cursor: pointer;
+    display: block;
 `;
 
 function App(props) {
     return (
         <BrowserRouter>
-            <MainTitleText>문제만들기 사이트</MainTitleText>
+            <MainTitleText to="/">문제만들기 사이트</MainTitleText>
             <Routes>
                 <Route index element={<MainPage />} />
-                <Route path="main/:mainId" element={<PostPage />} />
+                <Route path="categories" element={<MainPage />} />
+                <Route path="categories/:mainId/problems" element={<PostPage />} />
                 <Route path="post-write/:writeId" element={<PostWritePage />} />
-                <Route path="post/:problemId" element={<PostViewPage />} />
+                <Route path="problems/:problemId" element={<PostViewPage />} />
             </Routes>
         </BrowserRouter>
     );
