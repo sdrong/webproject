@@ -28,9 +28,13 @@ const Container = styled.div`
 `;
 
 const PostContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
     padding: 8px 16px;
     border: 1px solid grey;
     border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
 `;
 
 const TitleText = styled.p`
@@ -41,7 +45,6 @@ const TitleText = styled.p`
 const ContentText = styled.p`
     font-size: 20px;
     line-height: 32px;
-    white-space: pre-wrap;
 `;
 
 const CommentLabel = styled.p`
@@ -89,21 +92,20 @@ const toggleShowAnswer = () => {
                         navigate(`/categories/${post.category.id}/problems`);
                     }}
                 />
+                <TitleText>{post.title}</TitleText>
                 <PostContainer>
-                    <TitleText>{post.title}</TitleText>
-                    <ContentText>{result[0]+"???"+result[2]}</ContentText>
-                </PostContainer>
-                <CommentLabel>정답 맞춰보기</CommentLabel>
-                <AnswerList>answers = {post.answers}</AnswerList>
-
-                <TextInput
+                    <ContentText>{result[0]}</ContentText>
+                    <TextInput
                     height={40}
                     value={answer}
                     onChange={(event) => {
                     setAnswer(event.target.value);
-                }}
+                 }}
                 />
-
+                <ContentText>{result[2]}</ContentText>
+                </PostContainer>
+                <AnswerList>answers = {post.answers}</AnswerList>
+                <hr></hr>
                 <Button title="정답 제출" onClick={handleAnswerSubmit} />
                 <h4>result: {resultText}</h4>
                 
