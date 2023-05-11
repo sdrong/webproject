@@ -19,7 +19,7 @@ function TextInput(props) {
     // 최대 넓이 값 설정
     const maxWidth = 400;
     // 글자 수에 따라 넓이 계산
-    const calculatedWidth = length * 14;
+    const calculatedWidth = 40 + length * 13;
     // 최대 넓이보다 크면 최대 넓이로 설정
     const newWidth = calculatedWidth > maxWidth ? maxWidth : calculatedWidth;
     setWidth(newWidth);
