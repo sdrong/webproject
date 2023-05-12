@@ -54,7 +54,7 @@ function PostPage(props) {
         <Button
           title="글 작성하기"
           onClick={() => {
-            navigate(`/post-write/${mainIdInt}`);
+            navigate(`/post-write1/${mainIdInt}`);
           }}
         />
       </Container>

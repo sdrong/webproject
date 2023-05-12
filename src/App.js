@@ -9,7 +9,9 @@ import styled from "styled-components";
 // Pages
 import MainPage from "./component/page/MainPage";
 import PostPage from "./component/page/PostPage";
-import PostWritePage from './component/page/PostWritePage';
+import PostWritePage1 from './component/page/PostWritePage1';
+import PostWritePage2 from './component/page/PostWritePage2';
+import PostWritePage3 from './component/page/PostWritePage3';
 import PostViewPage from './component/page/PostViewPage';
 import axios from 'axios';
 
@@ -63,7 +65,9 @@ function App(props) {
                 <Route index element={<MainPage />} />
                 <Route path="categories" element={<MainPage />} />
                 <Route path="categories/:mainId/problems" element={<PostPage />} />
-                <Route path="post-write/:writeId" element={<PostWritePage />} />
+                <Route path="post-write1/:writeId" element={<PostWritePage1 />} />
+                <Route path="post-write2/:writeId" element={<PostWritePage2 />} />
+                <Route path="post-write3/:writeId" element={<PostWritePage3 />} />
                 <Route path="problems/:problemId" element={<PostViewPage />} />
             </Routes>
         </BrowserRouter>

@@ -26,35 +26,66 @@ const Container = styled.div`
     }
 `;
 
-const Mkproblem = styled.div`
+const Mkproblem = styled.textarea`
     padding: 16px 24px;
+    width: 80%;
+    height: 200px;
     border: 1px solid #D6D6D6;
     border-radius: 4px;
 `;
 
-function PostWritePage(props) {
+const TitleInput = styled.input`
+    height: 50px;
+    width: 70%;
+`;
+const SecretInput = styled.input`
+    width: 200px;
+    height: 50px;
+`;
+
+function PostWritePage2(props) {
     const navigate = useNavigate();
 
     const { writeId } = useParams(); //저장할때 어느 과목에 저장할지 id받아옴
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-
+    const [secret, setSecret] = useState(""); //비밀번호
+    const [text,setText] = useState("");
+    const [answer, setAnswer] = useState("");//답
     return (
         <Wrapper>
             <Container>
                 <h2>문제 제목</h2>
-                <TextInput
-                    height={20}
+                <TitleInput
                     value={title}
                     onChange={(event) => {
                         setTitle(event.target.value);
                     }}
                 />
-                <Mkproblem>
-                    <Editor/>
-                    <input></input>
-                    <Editor/>
-                </Mkproblem>
+                <h2>문제내용</h2>
+                <Mkproblem
+                    value={text}
+                    onChange={(event) => {
+                        setText(event.target.value);
+                    }}
+                    />
+                <h3>답</h3>
+                <TextInput
+                    height={40}
+                    value={answer}
+                    onChange={(event) => {
+                    setAnswer(event.target.value);
+                 }}
+                />
+                <h3>비밀번호</h3>
+                <SecretInput
+                    height={40}
+                    value={secret}
+                    onChange={(event) => {
+                    setSecret(event.target.value);
+                }}
+                />
+                <hr/>
                 <Button
                     title="문제 작성하기"
                     onClick={() => {
@@ -66,4 +97,4 @@ function PostWritePage(props) {
     );
 }
 
-export default PostWritePage;
+export default PostWritePage2;
