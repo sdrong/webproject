@@ -13,6 +13,7 @@ import PostWritePage1 from './component/page/PostWritePage1';
 import PostWritePage2 from './component/page/PostWritePage2';
 import PostWritePage3 from './component/page/PostWritePage3';
 import PostViewPage from './component/page/PostViewPage';
+import PostViewPage2 from "./component/page/PostViewPage2";
 import axios from 'axios';
 
 const MainTitleText = styled(NavLink)`
@@ -69,6 +70,7 @@ function App(props) {
                 <Route path="post-write2/:writeId" element={<PostWritePage2 />} />
                 <Route path="post-write3/:writeId" element={<PostWritePage3 />} />
                 <Route path="problems/:problemId" element={<PostViewPage />} />
+                <Route path="problems2/:problemId" element={<PostViewPage2 />} />
             </Routes>
         </BrowserRouter>
     );

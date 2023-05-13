@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 import styled from "styled-components";
 import PostList from "../list/PostList";
@@ -48,7 +48,8 @@ function PostPage(props) {
         <PostList
           posts={postList}
           onClickItem={(item) => {
-            navigate("/problems/" + item.id);
+          const path = item.type === 1 ? "/problems/" : "/problems2/";
+          navigate(`${path}${item.id}`);
           }}
         />
         <Button

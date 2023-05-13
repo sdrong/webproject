@@ -52,7 +52,33 @@ const CommentLabel = styled.p`
     font-weight: 500;
 `;
 
-function PostViewPage(props) {
+function levenshteinDistance(strA, strB) {
+    const distanceMatrix = Array(strB.length + 1).fill(null).map(() => Array(strA.length + 1).fill(null));
+  
+    for (let i = 0; i <= strA.length; i += 1) {
+      distanceMatrix[0][i] = i;
+    }
+  
+    for (let j = 0; j <= strB.length; j += 1) {
+      distanceMatrix[j][0] = j;
+    }
+  
+    for (let j = 1; j <= strB.length; j += 1) {
+      for (let i = 1; i <= strA.length; i += 1) {
+        const substitutionCost = strA[i - 1] === strB[j - 1] ? 0 : 1;
+  
+        distanceMatrix[j][i] = Math.min(
+          distanceMatrix[j][i - 1] + 1, // deletion
+          distanceMatrix[j - 1][i] + 1, // insertion
+          distanceMatrix[j - 1][i - 1] + substitutionCost // substitution
+        );
+      }
+    }
+  
+    return distanceMatrix[strB.length][strA.length];
+  }
+
+function PostViewPage2(props) {
     const navigate = useNavigate();
     const { problemId } = useParams(); //데이터 받는거
     console.log(problemId);
@@ -68,7 +94,10 @@ function PostViewPage(props) {
     const [resultText, setResultText] = useState("");  //정답유무
     const answerWithoutSpace = answer.replace(/\s+/g, '');
     const anwWithoutSpace = anw.replace(/\s+/g, '');
-
+    const distance = levenshteinDistance(answerWithoutSpace, anwWithoutSpace);
+    const maxLength = Math.max(answerWithoutSpace.length, anwWithoutSpace.length);
+    const similarity = (1 - distance / maxLength) * 100;
+    const per = similarity.toFixed(2);
     const handleAnswerSubmit = () => {
         if (answerWithoutSpace === anwWithoutSpace) {
           setResultText("정답입니다!");
@@ -98,17 +127,16 @@ const toggleShowAnswer = () => {
                 <TitleText>{post.title}</TitleText>
                 <PostContainer>
                     <ContentText>{result[0]}</ContentText>
-                    <TextInput
+                </PostContainer>
+                <AnswerList>answers = {post.answers}</AnswerList>
+                <hr></hr>
+                <TextInput
                     height={40}
                     value={answer}
                     onChange={(event) => {
                     setAnswer(event.target.value);
                  }}
                 />
-                <ContentText>{result[2]}</ContentText>
-                </PostContainer>
-                <AnswerList>answers = {post.answers}</AnswerList>
-                <hr></hr>
                 <Button title="정답 제출" onClick={handleAnswerSubmit} />
                 <h4>result: {resultText}</h4>
                 
@@ -116,8 +144,9 @@ const toggleShowAnswer = () => {
                 {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
                 
                 </Container>
+                <input value={per}></input>
         </Wrapper>
     );
 }
 
-export default PostViewPage;
+export default PostViewPage2;
