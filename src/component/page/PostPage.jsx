@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-
 import styled from "styled-components";
 import PostList from "../list/PostList";
-import Button from "../ui/Button";
+import Buttons from "../ui/Buttons";
 import data from "../../data.json";
 import MainList from "../list/MainList";
+import { ListGroup } from "react-bootstrap";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -39,7 +39,7 @@ function PostPage(props) {
   return (
     <Wrapper>
       <Container>
-        <Button
+        <Buttons
           title="뒤로 가기"
           onClick={() => {
             navigate(`/categories`);
@@ -48,11 +48,11 @@ function PostPage(props) {
         <PostList
           posts={postList}
           onClickItem={(item) => {
-          const path = item.type === 1 ? "/problems/" : "/problems2/";
-          navigate(`${path}${item.id}`);
+            const path = item.type === 1 ? "/problems/" : "/problems2/";
+            navigate(`${path}${item.id}`);
           }}
         />
-        <Button
+        <Buttons
           title="글 작성하기"
           onClick={() => {
             navigate(`/post-write1/${mainIdInt}`);

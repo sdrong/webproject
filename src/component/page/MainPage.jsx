@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
 import MainList from "../list/MainList";
 import categoryData from "../../categoryData.json";
-import Button from "../ui/Button";
+import Buttons from "../ui/Buttons";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -28,7 +27,14 @@ const Container = styled.div`
 
 function MainPage(props) {
   const navigate = useNavigate();
+  const { title, setTitle } = useState();
   return (
+    // <CategoryCard
+    //   posts={categoryData}
+    //   onClick={(item) => {
+    //     navigate(`/categories/${item.id}/problems`);
+    //   }}
+    // />
     <Wrapper>
       <Container>
         <MainList

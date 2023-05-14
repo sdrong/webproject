@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PostListItem from "./PostListItem";
+import { Card } from "react-bootstrap";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ function PostList(props) {
   const { posts, onClickItem } = props;
 
   return (
-    <Wrapper>
+    <Card style={{ border: "none", marginLeft: "0" }}>
       {posts.map((post, index) => {
         return (
           <PostListItem
@@ -31,7 +32,7 @@ function PostList(props) {
           />
         );
       })}
-    </Wrapper>
+    </Card>
   );
 }
 

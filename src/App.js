@@ -15,6 +15,7 @@ import PostWritePage3 from './component/page/PostWritePage3';
 import PostViewPage from './component/page/PostViewPage';
 import PostViewPage2 from "./component/page/PostViewPage2";
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const MainTitleText = styled(NavLink)`
     font-size: 24px;
@@ -25,14 +26,15 @@ const MainTitleText = styled(NavLink)`
 `;
 
 function App(props) {
-    const baseUrl = "http://localhost:3000";
+  const baseUrl = "http://localhost:3000";
   const categories = "categories";
   const problem = "problem";
 
   const [title, setTitle] = useState();
   const [post, setPost] = useState();
   const [category, setCategory] = useState();
-
+  const [postNumber, setPostNumber] = useState();
+  
   // spring과 통신하는 부분
   useEffect(() => {
     getPost();
@@ -52,6 +54,7 @@ function App(props) {
               .get(baseUrl + "/" + category.title)
               .then((response) => {
                 setPost(response.data);
+                
               })
           })
       })
@@ -59,21 +62,21 @@ function App(props) {
           console.log(error);
       })
   }
-    return (
-        <BrowserRouter>
-            <MainTitleText to="/">문제만들기 사이트</MainTitleText>
-            <Routes>
-                <Route index element={<MainPage />} />
-                <Route path="categories" element={<MainPage />} />
-                <Route path="categories/:mainId/problems" element={<PostPage />} />
-                <Route path="post-write1/:writeId" element={<PostWritePage1 />} />
-                <Route path="post-write2/:writeId" element={<PostWritePage2 />} />
-                <Route path="post-write3/:writeId" element={<PostWritePage3 />} />
-                <Route path="problems/:problemId" element={<PostViewPage />} />
-                <Route path="problems2/:problemId" element={<PostViewPage2 />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+      <BrowserRouter>
+        <MainTitleText to="/">문제만들기 사이트</MainTitleText>
+        <Routes>
+          <Route index element={<MainPage />} />
+          <Route path="categories" element={<MainPage />} />
+          <Route path="categories/:mainId/problems" element={<PostPage />} />
+          <Route path="post-write1/:writeId" element={<PostWritePage1 />} />
+          <Route path="post-write2/:writeId" element={<PostWritePage2 />} />
+          <Route path="post-write3/:writeId" element={<PostWritePage3 />} />
+          <Route path="problems/:problemId" element={<PostViewPage />} />
+          <Route path="problems2/:problemId" element={<PostViewPage2 />} />
+        </Routes>
+      </BrowserRouter>
+  );
 }
 
 export default App;
