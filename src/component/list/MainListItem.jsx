@@ -1,16 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, Button } from "react-bootstrap";
+import OperatingSystemImage from "../../image/free-icon-operating-system-2172894.png";
 
 const Wrapper = styled.div`
-  width: calc(100% - 32px);
-  padding: 16px;
-  display: flex;
+  display: inline-block;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: center;
-  border: 1px solid grey;
-  border-radius: 8px;
   cursor: pointer;
   background: white;
   :hover {
@@ -27,18 +23,25 @@ function MainListItem(props) {
   const { post, onClick } = props;
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Body>
-        <Card.Img
-          variant="top"
-          src="../image/free-icon-operating-system-2172894.png"
-        />
-        <Card.Title>{post.category}</Card.Title>
-        <Button variant="primary" onClick={onClick}>
-          문제 풀러가기
-        </Button>
-      </Card.Body>
-    </Card>
+    <Wrapper>
+      <Card
+        border="success"
+        style={{
+          width: "18rem",
+          height: "20rem",
+          display: "inline-block",
+          maxHeight: "600px",
+        }}
+      >
+        <Card.Body>
+          <Card.Img variant="top" src={OperatingSystemImage} />
+          <Card.Title>{post.category}</Card.Title>
+          <Button variant="primary" onClick={onClick}>
+            문제 풀러가기
+          </Button>
+        </Card.Body>
+      </Card>
+    </Wrapper>
   );
 }
 

@@ -6,6 +6,7 @@ import TextInput from "../ui/TextInput";
 import Buttons from "../ui/Buttons";
 import data from "../../data.json";
 import AnswerList from "../list/AnswerList";
+import { Card } from "react-bootstrap";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -30,11 +31,6 @@ const Container = styled.div`
 const PostContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 8px 16px;
-  border: 1px solid grey;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 600px;
 `;
 
 const TitleText = styled.p`
@@ -96,25 +92,56 @@ function PostViewPage(props) {
             navigate(`/categories/${post.category.id}/problems`);
           }}
         />
-        <TitleText>{post.title}</TitleText>
-        <PostContainer>
-          <ContentText>{result[0]}</ContentText>
-          <TextInput
-            height={40}
-            value={answer}
-            onChange={(event) => {
-              setAnswer(event.target.value);
-            }}
-          />
-          <ContentText>{result[2]}</ContentText>
-        </PostContainer>
+
+        {["Success"].map((variant) => (
+          <Card
+            bg={variant.toLowerCase()}
+            key={variant}
+            text={variant.toLowerCase() === "light" ? "dark" : "white"}
+            className="mb-2"
+          >
+            <Card.Header>{post.title}</Card.Header>
+            <Card.Body>
+              <Card.Text>
+                <PostContainer>
+                  <ContentText>{result[0]}</ContentText>
+                  <TextInput
+                    height={40}
+                    value={answer}
+                    onChange={(event) => {
+                      setAnswer(event.target.value);
+                    }}
+                  />
+                  <ContentText>{result[2]}</ContentText>
+                </PostContainer>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+        <Card border="primary">
+          <Card.Header>{post.title}</Card.Header>
+          <Card.Body>
+            <Card.Title />
+            <PostContainer>
+              <ContentText>{result[0]}</ContentText>
+              <TextInput
+                height={40}
+                value={answer}
+                onChange={(event) => {
+                  setAnswer(event.target.value);
+                }}
+              />
+              <ContentText>{result[2]}</ContentText>
+            </PostContainer>
+          </Card.Body>
+        </Card>
         <AnswerList>answers = {post.answers}</AnswerList>
         <hr></hr>
         <Buttons title="정답 제출" onClick={handleAnswerSubmit} />
         <h4>result: {resultText}</h4>
 
         <Buttons title={buttonTitle} onClick={toggleShowAnswer} />
-        {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
+        {showAnswer && <Result>정답은 [{anw}] 입니다!</Result>}
       </Container>
     </Wrapper>
   );

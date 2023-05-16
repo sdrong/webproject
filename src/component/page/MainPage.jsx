@@ -8,7 +8,7 @@ import Buttons from "../ui/Buttons";
 const Wrapper = styled.div`
   padding: 16px;
   width: calc(100% - 32px);
-  display: flex;np
+  display: inline-block;
   flex-direction: column;
   align-items: center;
   justify-content: center;

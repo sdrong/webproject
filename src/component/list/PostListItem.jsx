@@ -22,6 +22,7 @@ const TitleText = styled.p`
   font-size: 20px;
   font-weight: 500;
 `;
+
 const SomeContent = styled.p`
     font-size: 13px;np
     font-weight: 300;
@@ -33,12 +34,28 @@ function PostListItem(props) {
   const regex = /\$%&123/g;
   const result = str.split(regex); //
   return (
-    <Card style={{ margin: "10px", marginLeft: "0", width:"" }} onClick={onClick}>
-      <Card.Header as="h5">{post.title}</Card.Header>
-      <Card.Body>
-        <Card.Title>{result[0] + "???" + result[2]}</Card.Title>
-      </Card.Body>
-    </Card>
+    <div onClick={onClick}>
+      {["Success"].map((variant) => (
+        <Card
+          bg={variant.toLowerCase()}
+          key={variant}
+          text={variant.toLowerCase() === "light" ? "dark" : "white"}
+          className="mb-2"
+        >
+          <Card.Header>{post.title}</Card.Header>
+          <Card.Body>
+            <Card.Text>{result[0] + " [???] " + result[2]}</Card.Text>
+          </Card.Body>
+        </Card>
+      ))}
+    </div>
+
+    // <Card style={{ margin: "10px", marginLeft: "0", width:"" }} onClick={onClick}>
+    //   <Card.Header as="h5">{post.title}</Card.Header>
+    //   <Card.Body>
+    //     <Card.Title>{result[0] + "???" + result[2]}</Card.Title>
+    //   </Card.Body>
+    // </Card>
   );
 }
 
