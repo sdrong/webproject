@@ -4,8 +4,12 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TextInput from "../ui/TextInput";
 import Buttons from "../ui/Buttons";
-import Editor from "../ui/Editor";
+// import Editor from "../ui/Editor";
 import axios from "axios";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -50,7 +54,43 @@ const SecretInput = styled.input`
   height: 50px;
 `;
 
-function PostWritePage1(props) {
+const MyBlock = styled.div`
+  .wrapper-class {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+  .editor {
+    height: 500px !important;
+    border: 1px solid #f1f1f1 !important;
+    padding: 5px !important;
+    border-radius: 2px !important;
+  }
+`;
+
+const IntroduceContent = styled.div`
+  position: relative;
+  border: 0.0625rem solid #d7e2eb;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  padding: 1.5rem;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+`;
+
+const BottomMargin = styled.div`
+  margin-bottom: 8px;
+`;
+
+function TestEditorForm(props) {
+  // useState로 상태관리하기 초기값은 EditorState.createEmpty()
+  // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  // editorState의 현재 contentState 값을 원시 JS 구조로 변환시킨뒤, HTML 태그로 변환시켜준다.
+  const editorToHtml = draftToHtml(
+    convertToRaw(editorState.getCurrentContent())
+  );
   const navigate = useNavigate();
   const [answer, setAnswer] = useState(""); //답
   const [text, setText] = useState(""); //문제내용
@@ -58,12 +98,17 @@ function PostWritePage1(props) {
   const [title, setTitle] = useState(""); // 제목
   const [secret, setSecret] = useState(""); //비밀번호
   const [categoryName, setCategoryName] = useState(); //카테고리 이름
-  const str = text; //글을 가져오고
+  const str = editorToHtml; //글을 가져오고
   const result = str.split("???"); // 컨텐츠 분할
   const content = result[0] + "$%&123" + answer + "$%&123" + result[1]; // 문제내용과 답을 파싱하기위해 합쳐놓은 전체
   const baseUrl = "http://localhost:3000";
   const categories = "categories";
   const problem = "problem";
+
+  const onEditorStateChange = (editorState) => {
+    // editorState에 값 설정
+    setEditorState(editorState);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefalut();
@@ -88,28 +133,38 @@ function PostWritePage1(props) {
 
   return (
     <Wrapper>
-      <Container onSubmit={handleSubmit}>
-        {/* TODO: 뒤로가기 버튼 category/{categoryNumber}/problems으로 넘어가게 만들어야 함  */}
+      <MyBlock>
         <Buttons
           title="뒤로 가기"
           onClick={() => {
             navigate(`/categories/`);
           }}
         />
-        <h2>문제 제목(주관식)</h2>
-        <TitleInput
-          value={title}
-          onChange={(event) => {
-            setTitle(event.target.value);
+        <BottomMargin />
+        <Editor
+          // 에디터와 툴바 모두에 적용되는 클래스
+          wrapperClassName="wrapper-class"
+          // 에디터 주변에 적용된 클래스
+          editorClassName="editor"
+          // 툴바 주위에 적용된 클래스
+          toolbarClassName="toolbar-class"
+          // 툴바 설정
+          toolbar={{
+            // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
+            list: { inDropdown: true },
+            textAlign: { inDropdown: true },
+            link: { inDropdown: true },
+            history: { inDropdown: false },
           }}
-        />
-        <h2>문제내용</h2>
-        <Mkproblem
-          placeholder="문제내용???문제내용 과 같은 형식으로 정답부분을???로 표기하여 주세요"
-          value={text}
-          onChange={(event) => {
-            setText(event.target.value);
+          placeholder="정답부분을???로 표기하여 주세요 ex) 2002년 월드컵의 마스코트는 ???이다."
+          // 한국어 설정
+          localization={{
+            locale: "ko",
           }}
+          // 초기값 설정
+          editorState={editorState}
+          // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
+          onEditorStateChange={onEditorStateChange}
         />
         <h3>답</h3>
         <TextInput
@@ -135,10 +190,67 @@ function PostWritePage1(props) {
             navigate("/");
           }}
         />
-        <input value={content}></input>
-      </Container>
+        {/* dangerouslySetInnerHTML: https://ko.reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml */}
+        <IntroduceContent dangerouslySetInnerHTML={{ __html: editorToHtml }} />
+      </MyBlock>
     </Wrapper>
   );
 }
 
-export default PostWritePage1;
+export default TestEditorForm;
+
+// function PostWritePage1(props) {
+
+//
+
+//   return (
+//     <Wrapper>
+//       <Container onSubmit={handleSubmit}>
+//         {/* TODO: 뒤로가기 버튼 category/{categoryNumber}/problems으로 넘어가게 만들어야 함  */}
+//
+//         <h2>문제 제목(단답형)</h2>
+//         <TitleInput
+//           value={title}
+//           onChange={(event) => {
+//             setTitle(event.target.value);
+//           }}
+//         />
+//         <h2>문제내용</h2>
+//         <Mkproblem
+//           placeholder="정답부분을???로 표기하여 주세요 ex) 2002년 월드컵의 마스코트는 ???이다."
+//           value={text}
+//           onChange={(event) => {
+//             setText(event.target.value);
+//           }}
+//         />
+//         <h3>답</h3>
+//         <TextInput
+//           height={40}
+//           value={answer}
+//           onChange={(event) => {
+//             setAnswer(event.target.value);
+//           }}
+//         />
+//         <h3>비밀번호</h3>
+//         <SecretInput
+//           height={40}
+//           value={secret}
+//           onChange={(event) => {
+//             setSecret(event.target.value);
+//           }}
+//         />
+//         <hr />
+//         <Buttons
+//           onSubmit={handleSubmit}
+//           title="문제 작성하기"
+//           onClick={() => {
+//             navigate("/");
+//           }}
+//         />
+//         <input value={content}></input>
+//       </Container>
+//     </Wrapper>
+//   );
+// }
+
+// export default PostWritePage1;
