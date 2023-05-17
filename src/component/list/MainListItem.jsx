@@ -35,7 +35,7 @@ function MainListItem(props) {
       >
         <Card.Body>
           <Card.Img variant="top" src={OperatingSystemImage} />
-          <Card.Title>{post.category}</Card.Title>
+          <Card.Title>{post.name}</Card.Title>
           <Button variant="primary" onClick={onClick}>
             문제 풀러가기
           </Button>

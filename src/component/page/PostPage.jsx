@@ -6,6 +6,7 @@ import Buttons from "../ui/Buttons";
 import data from "../../data.json";
 import MainList from "../list/MainList";
 import { ListGroup } from "react-bootstrap";
+import axios from "axios";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -35,6 +36,23 @@ function PostPage(props) {
     //과목 id와 문제의 카테고리 안 id를 비교해서 list형태로 저장
     return item.category.id === mainIdInt;
   });
+
+  const { categoryData, setCateogryName } = useState();
+  const categoryId = categoryData.id;
+
+  async function getCategory() {
+    await axios
+      .get("/" + "categories" + "/" + { categoryId } + "/" + "problems")
+      .then((response) => {
+        console.log(response.data);
+        setCateogryName(response.data.categoryData);
+        const categoryId = categoryData.id;
+        // 카테고리 들어가는 요청
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <Wrapper>

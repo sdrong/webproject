@@ -65,6 +65,26 @@ function PostViewPage(props) {
   const [resultText, setResultText] = useState(""); //정답유무
   const answerWithoutSpace = answer.replace(/\s+/g, "");
   const anwWithoutSpace = anw.replace(/\s+/g, "");
+  const [categoryName, setCategoryName] = useState();
+
+  async function getPost() {
+    await axios
+      .get("/" + "categories")
+      .then((response) => {
+        console.log(response.data);
+        setCategoryName(response.data.PostData);
+        const postId = PostData.id;
+        axios
+          .get("/" + "categories" + "/" + { postId } + "/" + "problems")
+          .then((response) => {
+            console.log(response.data);
+          });
+        // 카테고리 들어가는 요청
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   const handleAnswerSubmit = () => {
     if (answerWithoutSpace === anwWithoutSpace) {
@@ -83,6 +103,7 @@ function PostViewPage(props) {
     setShowAnswer(!showAnswer);
     setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
   };
+
   return (
     <Wrapper>
       <Container>

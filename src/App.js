@@ -35,33 +35,10 @@ function App(props) {
   const [category, setCategory] = useState();
   const [postNumber, setPostNumber] = useState();
   
-  // spring과 통신하는 부분
-  useEffect(() => {
-    getPost();
-  }, []);
-
-  async function getPost(){
-    await axios
-      .get(baseUrl)
-      .then((response) => {
-        // 카테고리 들어가는 요청
-        axios
-          .get(baseUrl + "/" + categories)
-          .then((response) => {
-            setCategory(response.data);
-            // 카테고리에 들어가서 글 목록 보는 요청
-            axios
-              .get(baseUrl + "/" + category.title)
-              .then((response) => {
-                setPost(response.data);
-                
-              })
-          })
-      })
-      .catch((error)=>{
-          console.log(error);
-      })
-  }
+  // // spring과 통신하는 부분
+  // useEffect(() => {
+  //   getPost();
+  // }, []);
 
   return (
       <BrowserRouter>

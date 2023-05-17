@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { resolvePath, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MainList from "../list/MainList";
 import categoryData from "../../categoryData.json";
 import Buttons from "../ui/Buttons";
+import axios from "axios";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -28,17 +29,26 @@ const Container = styled.div`
 function MainPage(props) {
   const navigate = useNavigate();
   const { title, setTitle } = useState();
+  const { categoryName, setCateogryName } = useState();
+
+  async function getCategory() {
+    await axios
+      .get("/" + "categories")
+      .then((response) => {
+        console.log(response.data);
+        setCateogryName(response.data.categoryName);
+        // 카테고리 들어가는 요청
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
-    // <CategoryCard
-    //   posts={categoryData}
-    //   onClick={(item) => {
-    //     navigate(`/categories/${item.id}/problems`);
-    //   }}
-    // />
     <Wrapper>
       <Container>
         <MainList
-          posts={categoryData} //과목 목록
+          posts={categoryName} //과목 목록
           onClickItem={(item) => {
             navigate(`/categories/${item.id}/problems`);
           }}
