@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PostListItem from "./PostListItem";
 import { Card } from "react-bootstrap";
@@ -17,17 +18,19 @@ const Wrapper = styled.div`
 `;
 
 function PostList(props) {
-  const { posts, onClickItem } = props;
+  const navigate = useNavigate();
+  const { posts } = props;
 
   return (
     <Card style={{ border: "none", marginLeft: "0" }}>
-      {posts.map((post, index) => {
+      {posts.map((post) => {
         return (
           <PostListItem
             key={post.id}
             post={post}
-            onClick={() => {
-              onClickItem(post);
+            handleClick={() => {
+              var path = post.type == 1 ? "/problems" : "/problems2";
+              navigate(`${path}/${post.id}`);
             }}
           />
         );

@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Card, Button } from "react-bootstrap";
 import OperatingSystemImage from "../../image/free-icon-operating-system-2172894.png";
@@ -20,7 +21,8 @@ const TitleText = styled.p`
 `;
 
 function MainListItem(props) {
-  const { post, onClick } = props;
+  const navigate = useNavigate();
+  const { post } = props;
 
   return (
     <Wrapper>
@@ -36,7 +38,7 @@ function MainListItem(props) {
         <Card.Body>
           <Card.Img variant="top" src={OperatingSystemImage} />
           <Card.Title>{post.name}</Card.Title>
-          <Button variant="primary" onClick={onClick}>
+          <Button variant="primary" onClick={() => navigate(`/categories/${post.id}/problems`)}>
             문제 풀러가기
           </Button>
         </Card.Body>

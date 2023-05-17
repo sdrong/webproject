@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import CommentList from "../list/CommentList";
@@ -7,6 +7,7 @@ import Buttons from "../ui/Buttons";
 import data from "../../data.json";
 import AnswerList from "../list/AnswerList";
 import { Card } from "react-bootstrap";
+import axios from "axios";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -67,20 +68,26 @@ function PostViewPage(props) {
   const anwWithoutSpace = anw.replace(/\s+/g, "");
   const [categoryName, setCategoryName] = useState();
 
+  const [problem, setProblem] = useState();
+
   //   - url: '/problems/{problemId}'
   // - method: GET
   // - 설명: 선택한 문제 1개 조회.
-  async function getPost() {
+  async function getProblem() {
     await axios
-      .get("/" + "problems")
+      .get(`/problems/${problemId}`)
       .then((response) => {
-        console.log(response.data);
-        setCategoryName(response.data.PostData);
+        setProblem(response.data);
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
+  useEffect(() => {
+    getProblem();
+  }, []);
 
   const handleAnswerSubmit = () => {
     if (answerWithoutSpace === anwWithoutSpace) {
@@ -105,9 +112,7 @@ function PostViewPage(props) {
       <Container>
         <Buttons
           title="뒤로 가기"
-          onClick={() => {
-            navigate(`/categories/${post.category.id}/problems`);
-          }}
+          onClick={() => navigate(-1)}
         />
 
         {["Success"].map((variant) => (

@@ -16,18 +16,15 @@ const Wrapper = styled.div`
 `;
 
 function MainList(props) {
-  const { posts, onClickItem } = props;
+  const { posts } = props;
 
   return (
     <Wrapper style={{ display: "inline" }}>
-      {posts.map((post, index) => {
+      {posts.map((post) => {
         return (
           <MainListItem
             key={post.id}
             post={post}
-            onClick={() => {
-              onClickItem(post);
-            }}
           />
         );
       })}

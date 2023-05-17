@@ -29,12 +29,13 @@ const SomeContent = styled.p`
 `;
 
 function PostListItem(props) {
-  const { post, onClick } = props;
+  const { post, handleClick } = props;
   const str = post.content;
   const regex = /\$%&123/g;
   const result = str.split(regex); //
+
   return (
-    <div onClick={onClick}>
+    <div onClick={handleClick}>
       {["Success"].map((variant) => (
         <Card
           bg={variant.toLowerCase()}

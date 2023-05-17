@@ -26,32 +26,29 @@ const MainTitleText = styled(NavLink)`
 `;
 
 function App(props) {
-  const baseUrl = "http://localhost:3000";
-  const categories = "categories";
-  const problem = "problem";
+  // const baseUrl = "http://localhost:3000";
+  // const categories = "categories";
+  // const problem = "problem";
 
-  const [title, setTitle] = useState();
-  const [post, setPost] = useState();
-  const [category, setCategory] = useState();
-  const [postNumber, setPostNumber] = useState();
+  // const [title, setTitle] = useState();
+  // const [post, setPost] = useState();
+  // const [category, setCategory] = useState();
+  // const [postNumber, setPostNumber] = useState();
   
-  // // spring과 통신하는 부분
-  // useEffect(() => {
-  //   getPost();
-  // }, []);
+  // // // spring과 통신하는 부분
 
   return (
       <BrowserRouter>
         <MainTitleText to="/">문제만들기 사이트</MainTitleText>
         <Routes>
           <Route index element={<MainPage />} />
-          <Route path="categories" element={<MainPage />} />
-          <Route path="categories/:mainId/problems" element={<PostPage />} />
-          <Route path="post-write1/:writeId" element={<PostWritePage1 />} />
-          <Route path="post-write2/:writeId" element={<PostWritePage2 />} />
-          <Route path="post-write3/:writeId" element={<PostWritePage3 />} />
-          <Route path="problems/:problemId" element={<PostViewPage />} />
-          <Route path="problems2/:problemId" element={<PostViewPage2 />} />
+          <Route path="/categories" element={<MainPage />} />
+          <Route path="/categories/:mainId/problems" element={<PostPage />} />
+          <Route path="/post-write1/:writeId" element={<PostWritePage1 />} />
+          <Route path="/post-write2/:writeId" element={<PostWritePage2 />} />
+          <Route path="/post-write3/:writeId" element={<PostWritePage3 />} />
+          <Route path="/problems/:problemId" element={<PostViewPage />} />
+          <Route path="/problems2/:problemId" element={<PostViewPage2 />} />
         </Routes>
       </BrowserRouter>
   );

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import PostList from "../list/PostList";
 import Buttons from "../ui/Buttons";
-import data from "../../data.json";
 import MainList from "../list/MainList";
 import { ListGroup } from "react-bootstrap";
 import axios from "axios";
@@ -31,50 +30,42 @@ const Container = styled.div`
 function PostPage(props) {
   const navigate = useNavigate();
   const { mainId } = useParams();
-  const mainIdInt = parseInt(mainId, 10);
-  const postList = data.filter((item) => {
-    //과목 id와 문제의 카테고리 안 id를 비교해서 list형태로 저장
-    return item.category.id === mainIdInt;
-  });
+  // const mainIdInt = parseInt(mainId, 10);
 
-  const { categoryData, setCateogryName } = useState();
-  const categoryId = categoryData.id;
+  const [ problemList, setProblemList ] = useState();
 
-  async function getCategory() {
+  async function getProblems() {
     await axios
-      .get("/categories" + "/" + { mainId } + "/" + "problems")
+      .get(`/categories/${mainId}/problems`)
       .then((response) => {
-        console.log(response.data);
-        setCateogryName(response.data.categoryData);
-        const categoryId = categoryData.id;
-        // 카테고리 들어가는 요청
+        setProblemList(response.data);
+        console.log(response);
+        // 문제 목록들 가져오는 요청
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
+  useEffect(() => {
+    getProblems();
+  }, []);
+
   return (
     <Wrapper>
       <Container>
         <Buttons
           title="뒤로 가기"
-          onClick={() => {
-            navigate(`/categories`);
-          }}
+          onClick={() => navigate(-1)}
         />
-        <PostList
-          posts={postList}
-          onClickItem={(item) => {
-            const path = item.type === 1 ? "/problems/" : "/problems2/";
-            navigate(`${path}${item.id}`);
-          }}
-        />
+        {problemList &&
+          <PostList
+            posts={problemList}
+          />
+        }
         <Buttons
           title="글 작성하기"
-          onClick={() => {
-            navigate(`/post-write1/${mainIdInt}`);
-          }}
+          onClick={() => navigate(`/post-write1/${mainId}`)}
         />
       </Container>
     </Wrapper>
