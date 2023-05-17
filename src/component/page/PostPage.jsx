@@ -42,7 +42,7 @@ function PostPage(props) {
 
   async function getCategory() {
     await axios
-      .get("/" + "categories" + "/" + { categoryId } + "/" + "problems")
+      .get("/categories" + "/" + { mainId } + "/" + "problems")
       .then((response) => {
         console.log(response.data);
         setCateogryName(response.data.categoryData);

@@ -67,19 +67,15 @@ function PostViewPage(props) {
   const anwWithoutSpace = anw.replace(/\s+/g, "");
   const [categoryName, setCategoryName] = useState();
 
+  //   - url: '/problems/{problemId}'
+  // - method: GET
+  // - 설명: 선택한 문제 1개 조회.
   async function getPost() {
     await axios
-      .get("/" + "categories")
+      .get("/" + "problems")
       .then((response) => {
         console.log(response.data);
         setCategoryName(response.data.PostData);
-        const postId = PostData.id;
-        axios
-          .get("/" + "categories" + "/" + { postId } + "/" + "problems")
-          .then((response) => {
-            console.log(response.data);
-          });
-        // 카테고리 들어가는 요청
       })
       .catch((error) => {
         console.log(error);

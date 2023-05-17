@@ -29,14 +29,14 @@ const Container = styled.div`
 function MainPage(props) {
   const navigate = useNavigate();
   const { title, setTitle } = useState();
-  const { categoryName, setCateogryName } = useState();
+  const { categoryData, setCateogryData } = useState();
 
   async function getCategory() {
     await axios
-      .get("/" + "categories")
+      .get("/categories")
       .then((response) => {
         console.log(response.data);
-        setCateogryName(response.data.categoryName);
+        setCateogryData(response.data.categoryData);
         // 카테고리 들어가는 요청
       })
       .catch((error) => {
@@ -48,7 +48,7 @@ function MainPage(props) {
     <Wrapper>
       <Container>
         <MainList
-          posts={categoryName} //과목 목록
+          posts={categoryData} //과목 목록
           onClickItem={(item) => {
             navigate(`/categories/${item.id}/problems`);
           }}
