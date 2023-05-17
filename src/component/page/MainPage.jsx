@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { resolvePath, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MainList from "../list/MainList";
@@ -31,12 +31,18 @@ function MainPage(props) {
   const { title, setTitle } = useState();
   const { categoryData, setCateogryData } = useState();
 
+  // TODO: useEffect
+  useEffect(() => {
+    // 컴포넌트가 마운트 될 때 실행
+    getCategory();
+  }, []);
+
   async function getCategory() {
     await axios
       .get("/categories")
       .then((response) => {
         console.log(response.data);
-        setCateogryData(response.data.categoryData);
+        setCateogryData(response.data);
         // 카테고리 들어가는 요청
       })
       .catch((error) => {

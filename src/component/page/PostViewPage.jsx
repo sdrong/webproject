@@ -7,6 +7,7 @@ import Buttons from "../ui/Buttons";
 import data from "../../data.json";
 import AnswerList from "../list/AnswerList";
 import { Card } from "react-bootstrap";
+import axios from "axios";
 
 const Wrapper = styled.div`
   padding: 16px;
