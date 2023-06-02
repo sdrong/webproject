@@ -30,6 +30,9 @@ function PostList(props) {
             post={post}
             handleClick={() => {
               var path = post.type == 1 ? "/problems" : "/problems2";
+              if (post.type === 3) {
+                path = "/problems3";
+              }
               navigate(`${path}/${post.id}`);
             }}
           />

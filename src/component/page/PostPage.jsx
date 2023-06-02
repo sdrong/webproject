@@ -6,6 +6,7 @@ import Buttons from "../ui/Buttons";
 import MainList from "../list/MainList";
 import { ListGroup } from "react-bootstrap";
 import axios from "axios";
+import data from "../../data.json";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -30,39 +31,43 @@ const Container = styled.div`
 function PostPage(props) {
   const navigate = useNavigate();
   const { mainId } = useParams();
-  // const mainIdInt = parseInt(mainId, 10);
+  const mainIdInt = parseInt(mainId, 10);
 
-  const [ problemList, setProblemList ] = useState();
+  const problemList  = data.filter((item) => {
+    //과목 id와 문제의 카테고리 안 id를 비교해서 list형태로 저장
+    return item.category.id === mainIdInt;
+  });
 
-  async function getProblems() {
-    await axios
-      .get(`/categories/${mainId}/problems`)
-      .then((response) => {
-        setProblemList(response.data);
-        console.log(response);
-        // 문제 목록들 가져오는 요청
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // TODO: 백엔드 완성하기 전까지 주석처리
+  // const [problemList, setProblemList] = useState();
 
-  useEffect(() => {
-    getProblems();
-  }, []);
+  // async function getProblems() {
+  //   await axios
+  //     .get(`/categories/${mainId}/problems`)
+  //     .then((response) => {
+  //       setProblemList(response.data);
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
+
+  // useEffect(() => {
+  //   getProblems();
+  // }, []);
 
   return (
     <Wrapper>
       <Container>
-        <Buttons
-          title="뒤로 가기"
-          onClick={() => navigate(-1)}
-        />
-        {problemList &&
-          <PostList
-            posts={problemList}
-          />
-        }
+        <Buttons title="뒤로 가기" onClick={() => navigate(`/categories`)} />
+        <PostList
+  posts={problemList}
+  onClickItem={(item) => {
+    
+  }}
+/>
+
         <Buttons
           title="글 작성하기"
           onClick={() => navigate(`/post-write1/${mainId}`)}

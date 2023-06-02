@@ -140,23 +140,6 @@ function PostViewPage(props) {
             </Card.Body>
           </Card>
         ))}
-        <Card border="primary">
-          <Card.Header>{post.title}</Card.Header>
-          <Card.Body>
-            <Card.Title />
-            <PostContainer>
-              <ContentText>{result[0]}</ContentText>
-              <TextInput
-                height={40}
-                value={answer}
-                onChange={(event) => {
-                  setAnswer(event.target.value);
-                }}
-              />
-              <ContentText>{result[2]}</ContentText>
-            </PostContainer>
-          </Card.Body>
-        </Card>
         <AnswerList>answers = {post.answers}</AnswerList>
         <hr></hr>
         <Buttons title="정답 제출" onClick={handleAnswerSubmit} />

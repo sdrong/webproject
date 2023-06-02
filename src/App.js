@@ -14,6 +14,7 @@ import PostWritePage2 from './component/page/PostWritePage2';
 import PostWritePage3 from './component/page/PostWritePage3';
 import PostViewPage from './component/page/PostViewPage';
 import PostViewPage2 from "./component/page/PostViewPage2";
+import PostViewPage3 from "./component/page/PostViewPage3";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -49,6 +50,7 @@ function App(props) {
           <Route path="/post-write3/:writeId" element={<PostWritePage3 />} />
           <Route path="/problems/:problemId" element={<PostViewPage />} />
           <Route path="/problems2/:problemId" element={<PostViewPage2 />} />
+          <Route path="/problems3/:problemId" element={<PostViewPage3 />} />
         </Routes>
       </BrowserRouter>
   );

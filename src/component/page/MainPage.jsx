@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import MainList from "../list/MainList";
 import axios from "axios";
+import data from "../../data.json";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -24,33 +25,35 @@ const Container = styled.div`
 `;
 
 function MainPage(props) {
-  const [ categoryList, setCateogryList ] = useState();
+  // TODO: 백엔드 완료할 때까지 주석처리
+  // const [categoryList, setCateogryList] = useState();
 
-  async function getCategories() {
-    await axios
-      .get("/categories")
-      .then((response) => {
-        setCateogryList(response.data);
-        console.log(response);
-        // 카테고리 목록 불러오는 요청
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // async function getCategories() {
+  //   await axios
+  //     .get("/categories")
+  //     .then((response) => {
+  //       setCateogryList(response.data);
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
-  useEffect(() => {
-      getCategories();
-  }, []);
+  // useEffect(() => {
+  //   getCategories();
+  // }, []);
+
+  const categoryList = data;
 
   return (
     <Wrapper>
       <Container>
-        { categoryList &&
+        {categoryList && (
           <MainList
             posts={categoryList} //과목 목록들
           />
-        }
+        )}
       </Container>
     </Wrapper>
   );
