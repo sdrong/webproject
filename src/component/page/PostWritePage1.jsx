@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -94,7 +94,7 @@ function TestEditorForm(props) {
   const navigate = useNavigate();
   const [answer, setAnswer] = useState(""); //답
   const [text, setText] = useState(""); //문제내용
-  const { writeId } = useParams(); //저장할때 어느 과목에 저장할지 id받아옴
+  const { categoryId } = useParams(); //저장할때 어느 과목에 저장할지 id받아옴
   const [title, setTitle] = useState(""); // 제목
   const [secret, setSecret] = useState(""); //비밀번호
   const [categoryName, setCategoryName] = useState(); //카테고리 이름
@@ -114,7 +114,7 @@ function TestEditorForm(props) {
     e.preventDefalut();
 
     await axios
-      .post(baseUrl + "/" + categoryName + "problem", {
+      .post("/categories/" + { categoryId } + "/problems", {
         title: title,
         content: content,
       })

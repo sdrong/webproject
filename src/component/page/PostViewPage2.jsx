@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import CommentList from "../list/CommentList";
@@ -6,6 +6,7 @@ import TextInput from "../ui/TextInput";
 import Buttons from "../ui/Buttons";
 import data from "../../data.json";
 import AnswerList from "../list/AnswerList";
+import axios from "axios";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -118,6 +119,23 @@ function PostViewPage2(props) {
     setShowAnswer(!showAnswer);
     setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
   };
+
+  // async function getProblems() {
+  //   await axios
+  //     .get(`/categories/${mainId}/problems`)
+  //     .then((response) => {
+  //       setProblemList(response.data);
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
+
+  // useEffect(() => {
+  //   getProblems();
+  // }, []);
+
   return (
     <Wrapper>
       <Container>

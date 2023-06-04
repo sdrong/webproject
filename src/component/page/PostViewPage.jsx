@@ -69,10 +69,13 @@ function PostViewPage(props) {
   const [categoryName, setCategoryName] = useState();
 
   const [problem, setProblem] = useState();
+  // const [update_problem, setUpdateProblem] = useState();
+  const [solver, setSolver] = useState();
 
   //   - url: '/problems/{problemId}'
   // - method: GET
   // - 설명: 선택한 문제 1개 조회.
+
   async function getProblem() {
     await axios
       .get(`/problems/${problemId}`)
@@ -89,6 +92,52 @@ function PostViewPage(props) {
     getProblem();
   }, []);
 
+  // TODO: PUT method
+  // - url: '/problems/{problemId}'
+  // - url 예시: 'http://localhost:8080/problems/1'
+  // - method: PUT
+  // - 내용: 선택한 문제 1개 제목과 내용 수정.
+  // - 토큰 담긴 헤더 필수 유무: O
+
+  // async function updateProblem() {
+  //   await axios.put(`/problems/${problemId}`).then();
+  // }
+
+  // - url 예시: 'http://localhost:8080/solve-problem/1'
+  // - method: PUT
+  // - 내용: 문제가 정답이 맞을시, 해당 문제의 정답자들 리스트에 올려줌.
+  // - 토큰 담긴 헤더 필수 유무: O
+
+  async function putSolver() {
+    await axios
+      .put(`http://localhost:8080/solve-problem/${problemId}`)
+      .then((response) => {
+        setSolver(response.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // - url: '/problems/{problemId}'
+  // - url 예시: 'http://localhost:8080/problems/1'
+  // - method: DELETE
+  // - 내용: 문제 삭제
+  // - 토큰 담긴 헤더 필수 유무: O
+
+  async function deleteProblem() {
+    await axios
+      .delete(`http://localhost:8080/problems/${problemId}}`)
+      .then((response) => {
+        setSolver(response.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   const handleAnswerSubmit = () => {
     if (answerWithoutSpace === anwWithoutSpace) {
       setResultText("정답입니다!");
@@ -96,6 +145,7 @@ function PostViewPage(props) {
       setResultText("틀렸습니다.");
     }
   };
+
   const [showAnswer, setShowAnswer] = useState(false);
   const Result = styled.h4`
     margin: 16px 0;
@@ -110,10 +160,7 @@ function PostViewPage(props) {
   return (
     <Wrapper>
       <Container>
-        <Buttons
-          title="뒤로 가기"
-          onClick={() => navigate(-1)}
-        />
+        <Buttons title="뒤로 가기" onClick={() => navigate(-1)} />
 
         {["Success"].map((variant) => (
           <Card
@@ -164,6 +211,7 @@ function PostViewPage(props) {
 
         <Buttons title={buttonTitle} onClick={toggleShowAnswer} />
         {showAnswer && <Result>정답은 [{anw}] 입니다!</Result>}
+        <Buttons title="삭제" onClick={deleteProblem} />
       </Container>
     </Wrapper>
   );

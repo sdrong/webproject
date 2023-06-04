@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MainList from "../list/MainList";
 import axios from "axios";
 import data from "../../data.json";
+import CommentList from "../list/CommentList";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -47,15 +48,26 @@ function MainPage(props) {
   const categoryList = data;
 
   return (
-    <Wrapper>
-      <Container>
-        {categoryList && (
-          <MainList
-            posts={categoryList} //과목 목록들
-          />
-        )}
-      </Container>
-    </Wrapper>
+    <div class="float-right">
+      <Wrapper>
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+          <button type="button" class="btn btn-outline-primary">
+            회원가입
+          </button>
+          <button type="button" class="btn btn-outline-primary">
+            로그인
+          </button>
+        </div>
+        <Container>
+          {categoryList && (
+            <MainList
+              posts={categoryList} //과목 목록들
+            />
+          )}
+        </Container>
+        <CommentList></CommentList>
+      </Wrapper>
+    </div>
   );
 }
 
