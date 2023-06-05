@@ -92,6 +92,13 @@ function PostViewPage3(props) {
           navigate(`/categories/${post.category.id}/problems`);
         }}
       />
+      <Buttons
+          title="수정"
+          onClick={() => navigate(`/post-write3/${problemId}`)}
+        />
+        <Buttons
+        title = "삭제"
+        />
       <TitleText>{post.title}</TitleText>
       <PostContainer>
         <ContentText>{result[0]}</ContentText>
@@ -114,6 +121,7 @@ function PostViewPage3(props) {
 
       <Buttons title={buttonTitle} onClick={toggleShowAnswer} />
       {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
+      <hr/>
       <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
     </Container>
   </Wrapper>

@@ -4,6 +4,21 @@
         "type": 1,
         "title": "지호의 성은?",
         "content": "지호의 성은$%&123엄$%&123씨이다.",
+        "recommendCount": 1,
+        "recommendUsers": [
+            2
+        ],
+        "solveUsers": [
+            2
+        ],
+        "user": {
+            "solvableCount": 5,
+            "id": 1,
+            "loginId": "테스트아디1",
+            "loginPw": null,
+            "username": "테스트이름1",
+            "authority": null
+        },
         "category": {
             "id": 1,
             "name": "운영체제",
@@ -15,6 +30,21 @@
         "type": 1,
         "title": "지호의 고양이 이름은?",
         "content": "지호의 고양이 이름은$%&123밤이$%&123이다",
+        "recommendCount": 1,
+        "recommendUsers": [
+            2
+        ],
+        "solveUsers": [
+            2
+        ],
+        "user": {
+            "solvableCount": 5,
+            "id": 1,
+            "loginId": "테스트아디1",
+            "loginPw": null,
+            "username": "테스트이름1",
+            "authority": null
+        },
         "category": {
             "id": 2,
             "name": "운영체제",
@@ -26,6 +56,21 @@
         "type": 1,
         "title": "세상에서 가장 귀여운 강아지",
         "content": "그건 바로$%&123다롱$%&123이다",
+        "recommendCount": 1,
+        "recommendUsers": [
+            2
+        ],
+        "solveUsers": [
+            2
+        ],
+        "user": {
+            "solvableCount": 5,
+            "id": 1,
+            "loginId": "테스트아디1",
+            "loginPw": null,
+            "username": "테스트이름1",
+            "authority": null
+        },
         "category": {
             "id": 1,
             "name": "네트워크",
@@ -37,6 +82,21 @@
         "type": 2,
         "title": "문제4제목",
         "content": "문제4에 대한 내용에 대한 정답을 적으시오$%&123문제4에대한 정답내용",
+        "recommendCount": 1,
+        "recommendUsers": [
+            2
+        ],
+        "solveUsers": [
+            2
+        ],
+        "user": {
+            "solvableCount": 5,
+            "id": 1,
+            "loginId": "테스트아디1",
+            "loginPw": null,
+            "username": "테스트이름1",
+            "authority": null
+        },
         "category": {
             "id": 1,
             "name": "네트워크",
@@ -48,6 +108,21 @@
         "type": 3,
         "title": "문제5제목",
         "content": "문제 설명$%&123답예시1$%&123답예시2$%&123답예시3$%&123답예시4$%&1234",
+        "recommendCount": 1,
+        "recommendUsers": [
+            2
+        ],
+        "solveUsers": [
+            2
+        ],
+        "user": {
+            "solvableCount": 5,
+            "id": 1,
+            "loginId": "테스트아디1",
+            "loginPw": null,
+            "username": "테스트이름1",
+            "authority": null
+        },
         "category": {
             "id": 1,
             "name": "네트워크",
@@ -59,6 +134,17 @@
         "type": 3,
         "title": "다롱이의 성",
         "content": "다롱이의 성은?$%&123김$%&123엄$%&123신$%&123사$%&1233",
+        "recommendCount": 0,
+        "recommendUsers": [],
+        "solveUsers": [],
+        "user": {
+            "solvableCount": 5,
+            "id": 1,
+            "loginId": "테스트아디1",
+            "loginPw": null,
+            "username": "테스트이름1",
+            "authority": null
+        },
         "category": {
             "id": 1,
             "name": "네트워크",

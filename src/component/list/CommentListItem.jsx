@@ -7,9 +7,15 @@ function CommentListItem(props) {
   const { comment } = props;
   const commentId = comment.id;
   const [good, setGood] = useState(comment.recommendCount);
+  const userid = 1;
+  const isRecommended = comment.recommendUsers.includes(userid);
 
   const handleGoodClick = () => {
-    setGood(good + 1);
+    if (!isRecommended) {
+      setGood(good + 1);
+      // Update the backend or send a request to mark the comment as recommended
+      // For example: sendRecommendation(commentId);
+    }
   };
 
   return (
@@ -23,7 +29,12 @@ function CommentListItem(props) {
       <Card.Header>
         <Link to={`/comments/${commentId}`}>{"수정"}</Link>
         <h4>
-          <span onClick={handleGoodClick}>👍</span>
+          <span
+            onClick={handleGoodClick}
+            style={{ cursor: isRecommended ? "not-allowed" : "pointer" }}
+          >
+            👍
+          </span>
           {good}
         </h4>
         <Card.Text>{"익명"}{comment.id}</Card.Text>

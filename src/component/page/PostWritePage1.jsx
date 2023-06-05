@@ -10,6 +10,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
+import data from "../../data.json";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -92,9 +93,21 @@ function TestEditorForm(props) {
     convertToRaw(editorState.getCurrentContent())
   );
   const navigate = useNavigate();
+
+  const { writeId } = useParams(); //저장할때 어느 과목에 저장할지 id받아옴
+  console.log(writeId);
+  const problemIdInt = parseInt(writeId, 10);
+  
+  const pp = data.find((item) => {
+    //쓸 데이터id 찾기
+    return item.id === problemIdInt;
+  });
+  const st = pp.content; //글을 가져오고
+  const regex = /\$%&123/g; //파싱을 조건
+  const results = st.split(regex); // 컨텐츠 분할
+
   const [answer, setAnswer] = useState(""); //답
   const [text, setText] = useState(""); //문제내용
-  const { writeId } = useParams(); //저장할때 어느 과목에 저장할지 id받아옴
   const [title, setTitle] = useState(""); // 제목
   const [secret, setSecret] = useState(""); //비밀번호
   const [categoryName, setCategoryName] = useState(); //카테고리 이름
@@ -132,7 +145,9 @@ function TestEditorForm(props) {
   };
 
   return (
+    
     <Wrapper>
+      
       <MyBlock>
         <Buttons
           title="뒤로 가기"
@@ -140,6 +155,7 @@ function TestEditorForm(props) {
             navigate(`/categories/`);
           }}
         />
+        
         <BottomMargin />
         <Editor
           // 에디터와 툴바 모두에 적용되는 클래스

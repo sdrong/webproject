@@ -127,6 +127,13 @@ function PostViewPage2(props) {
             navigate(`/categories/${post.category.id}/problems`);
           }}
         />
+        <Buttons
+          title="수정"
+          onClick={() => navigate(`/post-write2/${problemId}`)}
+        />
+        <Buttons
+        title = "삭제"
+        />
         <TitleText>{post.title}</TitleText>
         <PostContainer>
           <ContentText>{result[0]}</ContentText>
@@ -147,7 +154,7 @@ function PostViewPage2(props) {
         {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
       </Container>
       <input value={per}></input>
-
+      <hr/>
       <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
     </Wrapper>
   );

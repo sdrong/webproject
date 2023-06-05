@@ -76,6 +76,10 @@ function PostWritePage2(props) {
 
   return (
     <Wrapper>
+      <Buttons
+          title="뒤로 가기"
+          onClick={() => navigate(-1)}
+        />
       <Container>
         <h2>문제 제목</h2>
         <TitleInput

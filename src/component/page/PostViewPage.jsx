@@ -114,7 +114,13 @@ function PostViewPage(props) {
           title="뒤로 가기"
           onClick={() => navigate(-1)}
         />
-
+        <Buttons
+          title="수정"
+          onClick={() => navigate(`/post-write1/${problemId}`)}
+        />
+        <Buttons
+        title = "삭제"
+        />
         {["Success"].map((variant) => (
           <Card
             bg={variant.toLowerCase()}
@@ -147,6 +153,7 @@ function PostViewPage(props) {
 
         <Buttons title={buttonTitle} onClick={toggleShowAnswer} />
         {showAnswer && <Result>정답은 [{anw}] 입니다!</Result>}
+        <hr/>
         <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
       </Container>
     </Wrapper>
