@@ -5,6 +5,7 @@ import MainList from "../list/MainList";
 import categoryData from "../../categoryData.json";
 import Buttons from "../ui/Buttons";
 import axios from "axios";
+import { Button } from "react-bootstrap";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -53,6 +54,20 @@ function MainPage(props) {
   return (
     <Wrapper>
       <Container>
+        <Buttons
+          onClickItem={(item) => {
+            navigate(`/login`);
+          }}
+        >
+          로그인
+        </Buttons>
+        <Buttons
+          onClickItem={(item) => {
+            navigate(`/sighup`);
+          }}
+        >
+          회원가입
+        </Buttons>
         <MainList
           posts={categoryData} //과목 목록
           onClickItem={(item) => {

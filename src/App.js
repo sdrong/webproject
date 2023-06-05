@@ -14,6 +14,7 @@ import PostWritePage2 from './component/page/PostWritePage2';
 import PostWritePage3 from './component/page/PostWritePage3';
 import PostViewPage from './component/page/PostViewPage';
 import PostViewPage2 from "./component/page/PostViewPage2";
+import CommentPage from "./component/page/CommentPage";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -26,7 +27,7 @@ const MainTitleText = styled(NavLink)`
 `;
 
 function App(props) {
-  const baseUrl = "http://localhost:3000";
+  const baseUrl = "http://localhost:8000";
   const categories = "categories";
   const problem = "problem";
 
@@ -35,10 +36,10 @@ function App(props) {
   const [category, setCategory] = useState();
   const [postNumber, setPostNumber] = useState();
   
-  // // spring과 통신하는 부분
-  // useEffect(() => {
-  //   getPost();
-  // }, []);
+  // spring과 통신하는 부분
+  useEffect(() => {
+    getPost();
+  }, []);
 
   return (
       <BrowserRouter>
@@ -52,6 +53,7 @@ function App(props) {
           <Route path="post-write3/:writeId" element={<PostWritePage3 />} />
           <Route path="problems/:problemId" element={<PostViewPage />} />
           <Route path="problems2/:problemId" element={<PostViewPage2 />} />
+          <Route path="/comments/:commentId" element = {<CommentPage/>}/>
         </Routes>
       </BrowserRouter>
   );

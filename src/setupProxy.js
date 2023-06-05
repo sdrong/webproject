@@ -1,10 +1,22 @@
-const {createProxyMiddleware} = reqire('http-proxy-middleware');
+// const {createProxyMiddleware} = reqire('http-proxy-middleware');
 
-modeule.exports = function(app) {
+// modeule.exports = function(app) {
+//     app.use(
+//         '/',
+//         createProxyMiddleware({
+//             target: "http://localhost:3000",
+//             changeOrigin: true,
+//         })
+//     );
+// };
+
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = function (app) {
     app.use(
-        '/',
+        ['/categories', '/problems'],
         createProxyMiddleware({
-            target: "http://localhost:3000",
+            target: 'http://localhost:8080',
             changeOrigin: true,
         })
     );

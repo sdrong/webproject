@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "content": "댓글 내용입니다~!ㄱㄴㄷ4",
+        "recommendCount": 0,
+        "recommendUsers": []
+    },
+    {
+        "id": 2,
+        "content": "댓글 내용입니다~!ㄱㄴㄷ3",
+        "recommendCount": 0,
+        "recommendUsers": []
+    },
+    {
+        "id": 3,
+        "content": "댓글 수정했음.",
+        "recommendCount": 1,
+        "recommendUsers": [
+            1
+        ]
+    },
+    {
+        "id": 4,
+        "content": "댓글 내용입니다~!ㄱㄴㄷ",
+        "recommendCount": 0,
+        "recommendUsers": []
+    }
+]
