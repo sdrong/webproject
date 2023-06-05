@@ -1,35 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-
-const Wrapper = styled.div`
-    width: calc(100% - 32px);
-    padding: 8px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    border: 1px solid grey;
-    border-radius: 8px;
-    cursor: pointer;
-    background: white;
-    :hover {
-        background: lightgrey;
-    }
-`;
-
-const ContentText = styled.p`
-    font-size: 16px;
-    white-space: pre-wrap;
-`;
+import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function CommentListItem(props) {
-    const { comment } = props;
+  const { comment } = props;
+  const commentId = comment.id;
+  const [good, setGood] = useState(comment.recommendCount);
 
-    return (
-        <Wrapper>
-            <ContentText>{comment.content}</ContentText>
-        </Wrapper>
-    );
+  const handleGoodClick = () => {
+    setGood(good + 1);
+  };
+
+  return (
+    <Card
+      border="success"
+      style={{
+        width: "100%",
+        display: "inline-block"
+      }}
+    >
+      <Card.Header>
+        <Link to={`/comments/${commentId}`}>{"수정"}</Link>
+        <h4>
+          <span onClick={handleGoodClick}>👍</span>
+          {good}
+        </h4>
+        <Card.Text>{"익명"}{comment.id}</Card.Text>
+      </Card.Header>
+      <Card.Body>
+        <Card.Text>{comment.content}</Card.Text>
+      </Card.Body>
+    </Card>
+  );
 }
 
 export default CommentListItem;

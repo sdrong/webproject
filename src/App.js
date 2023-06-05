@@ -15,6 +15,8 @@ import PostWritePage3 from './component/page/PostWritePage3';
 import PostViewPage from './component/page/PostViewPage';
 import PostViewPage2 from "./component/page/PostViewPage2";
 import PostViewPage3 from "./component/page/PostViewPage3";
+import CommentPage from "./component/page/CommentPage";
+import Update_CommentPage from "./component/page/Upadata_CommentPage";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -51,6 +53,8 @@ function App(props) {
           <Route path="/problems/:problemId" element={<PostViewPage />} />
           <Route path="/problems2/:problemId" element={<PostViewPage2 />} />
           <Route path="/problems3/:problemId" element={<PostViewPage3 />} />
+          <Route path="/problems/:problemId/comments" element={<CommentPage />} />
+          <Route path="/comments/:commentId" element = {<Update_CommentPage/>}/>
         </Routes>
       </BrowserRouter>
   );

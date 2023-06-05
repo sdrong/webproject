@@ -114,6 +114,7 @@ function PostViewPage3(props) {
 
       <Buttons title={buttonTitle} onClick={toggleShowAnswer} />
       {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
+      <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
     </Container>
   </Wrapper>
   );

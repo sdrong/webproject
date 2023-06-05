@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Card, Button } from "react-bootstrap";
 
 const Wrapper = styled.div`
   width: calc(100% - 32px);
@@ -24,9 +25,10 @@ function AnswerListItem(props) {
   const { comment } = props;
 
   return (
-    <Wrapper>
-      <ContentText>{comment.content}</ContentText>
-    </Wrapper>
+    <Card>
+      <Card.Header>{comment.id}</Card.Header>
+      <Card.Body>{comment.content}</Card.Body>
+    </Card>
   );
 }
 

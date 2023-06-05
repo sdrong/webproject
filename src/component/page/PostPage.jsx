@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link, Route } from "react-router-dom";
 import styled from "styled-components";
 import PostList from "../list/PostList";
 import Buttons from "../ui/Buttons";
@@ -33,45 +33,25 @@ function PostPage(props) {
   const { mainId } = useParams();
   const mainIdInt = parseInt(mainId, 10);
 
-  const problemList  = data.filter((item) => {
-    //과목 id와 문제의 카테고리 안 id를 비교해서 list형태로 저장
+  const problemList = data.filter((item) => {
     return item.category.id === mainIdInt;
   });
-
-  // TODO: 백엔드 완성하기 전까지 주석처리
-  // const [problemList, setProblemList] = useState();
-
-  // async function getProblems() {
-  //   await axios
-  //     .get(`/categories/${mainId}/problems`)
-  //     .then((response) => {
-  //       setProblemList(response.data);
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
-
-  // useEffect(() => {
-  //   getProblems();
-  // }, []);
 
   return (
     <Wrapper>
       <Container>
         <Buttons title="뒤로 가기" onClick={() => navigate(`/categories`)} />
         <PostList
-  posts={problemList}
-  onClickItem={(item) => {
-    
-  }}
-/>
+          posts={problemList}
+          onClickItem={(item) => {
+            // TODO: 클릭한 항목에 대한 동작 구현
+          }}
+        />
 
         <Buttons
           title="글 작성하기"
           onClick={() => navigate(`/post-write1/${mainId}`)}
-        />
+        />        
       </Container>
     </Wrapper>
   );

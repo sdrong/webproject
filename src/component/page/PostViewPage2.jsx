@@ -147,6 +147,8 @@ function PostViewPage2(props) {
         {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
       </Container>
       <input value={per}></input>
+
+      <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
     </Wrapper>
   );
 }
