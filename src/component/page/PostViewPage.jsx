@@ -58,6 +58,8 @@ function PostViewPage(props) {
     //쓸 데이터id 찾기
     return item.id === problemIdInt;
   });
+  const solvedusers = post.solveUsers;//푼사람 목록
+  const users = post.user;
   const [answer, setAnswer] = useState(""); //text area의 anwser 가져오는거
   const str = post.content; //글을 가져오고
   const regex = /\$%&123/g; //파싱을 조건
@@ -106,7 +108,15 @@ function PostViewPage(props) {
     setShowAnswer(!showAnswer);
     setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
   };
+  const [isEditMode, setIsEditMode] = useState(false);
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
+  };
 
+  const title = post.title;
+  const [re_problem, setReProblem] = useState(result[0]+"???"+result[2]); //수정 문제설명
+  const [re_title, setReTitle] = useState(title);//수정할 제목
+  const [re_answer, setReAnswer] = useState(anw);
   return (
     <Wrapper>
       <Container>
@@ -114,13 +124,47 @@ function PostViewPage(props) {
           title="뒤로 가기"
           onClick={() => navigate(-1)}
         />
+        <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
+        <br/>
         <Buttons
-          title="수정"
-          onClick={() => navigate(`/post-write1/${problemId}`)}
-        />
-        <Buttons
-        title = "삭제"
-        />
+        title = "삭제"/>
+        <hr/>
+        {isEditMode ? (
+           <>
+           <h2>문제 제목</h2>
+           <input
+           style={{ width: "100%", height: "50px" }}
+           value={re_title}
+            onChange={(event) => {
+              setReTitle(event.target.value);
+               }}
+               />
+
+               
+           <h2>문제 내용</h2>
+            <textarea
+              style={{ width: "100%", height: "200px" }}
+              value={re_problem}
+              placeholder="정답부분을???로 표기하여 주세요 ex) 2002년 월드컵의 마스코트는 ???이다."
+              onChange={(event) => {
+              setReProblem(event.target.value);
+               }}
+           />
+           <h2>수정 정답</h2>
+           <TextInput
+           style={{ width: "100%", height: "200px" }}
+           value={re_answer}
+            onChange={(event) => {
+              setReAnswer(event.target.value);
+               }}
+               />
+                <br/>
+          <Buttons title="저장" onClick={toggleEditMode} />
+          <hr/>
+           </>
+         ) : (
+            <Buttons title="수정" onClick={toggleEditMode} />
+          )}
         {["Success"].map((variant) => (
           <Card
             bg={variant.toLowerCase()}
@@ -154,7 +198,6 @@ function PostViewPage(props) {
         <Buttons title={buttonTitle} onClick={toggleShowAnswer} />
         {showAnswer && <Result>정답은 [{anw}] 입니다!</Result>}
         <hr/>
-        <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
       </Container>
     </Wrapper>
   );

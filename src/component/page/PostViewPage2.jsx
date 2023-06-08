@@ -118,6 +118,15 @@ function PostViewPage2(props) {
     setShowAnswer(!showAnswer);
     setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
   };
+  const [isEditMode, setIsEditMode] = useState(false);
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
+  };
+
+  const title = post.title;
+  const [re_write, setReWrite] = useState(result[0]); //수정한 답
+  const [re_title, setReTitle] = useState(post.title);//수정할 제목
+  const [re_answer, setReAnswer] = useState(result[1]);
   return (
     <Wrapper>
       <Container>
@@ -127,13 +136,47 @@ function PostViewPage2(props) {
             navigate(`/categories/${post.category.id}/problems`);
           }}
         />
-        <Buttons
-          title="수정"
-          onClick={() => navigate(`/post-write2/${problemId}`)}
-        />
+         <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
+        <br/>
         <Buttons
         title = "삭제"
         />
+        <hr/>
+        {isEditMode ? (
+           <>
+           <h2>수정 문제 제목</h2>
+           <input
+           style={{ width: "100%", height: "50px" }}
+           value={re_title}
+            onChange={(event) => {
+              setReTitle(event.target.value);
+               }}
+               />
+               
+           <h2>수정 문제 내용</h2>
+            <textarea
+              style={{ width: "100%", height: "200px" }}
+              value={re_write}
+              placeholder="정답부분을$%&123사이에 넣어주세요 ex) 2002년 월드컵의 마스코트는 $%&123정답부분$%&123이다."
+              onChange={(event) => {
+              setReWrite(event.target.value);
+               }}
+           />
+           <h2>수정 정답</h2>
+           <TextInput
+           style={{ width: "100%", height: "200px" }}
+           value={re_answer}
+            onChange={(event) => {
+              setReAnswer(event.target.value);
+               }}
+               />
+                <br/>
+          <Buttons title="저장" onClick={toggleEditMode} />
+          <hr/>
+           </>
+         ) : (
+            <Buttons title="수정" onClick={toggleEditMode} />
+          )}
         <TitleText>{post.title}</TitleText>
         <PostContainer>
           <ContentText>{result[0]}</ContentText>
@@ -153,9 +196,6 @@ function PostViewPage2(props) {
         <Buttons title={buttonTitle} onClick={toggleShowAnswer} />
         {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
       </Container>
-      <input value={per}></input>
-      <hr/>
-      <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
     </Wrapper>
   );
 }

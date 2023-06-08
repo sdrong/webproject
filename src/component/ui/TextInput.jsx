@@ -11,7 +11,7 @@ const StyledInput = styled.input`
 `;
 
 function TextInput(props) {
-  const { height, defaultValue, onChange } = props;
+  const { height, value, onChange } = props;
   const [width, setWidth] = useState('100');
   
   const handleWidthChange = (event) => {
@@ -29,7 +29,7 @@ function TextInput(props) {
     <StyledInput
       width={width}
       height={height}
-      defaultValue={defaultValue}
+      value={value}
       onChange={(event) => {
         handleWidthChange(event);
         onChange(event);
@@ -37,7 +37,5 @@ function TextInput(props) {
     />
   );
 }
-
-
 
 export default TextInput;

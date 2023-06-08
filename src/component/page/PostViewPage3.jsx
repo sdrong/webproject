@@ -50,20 +50,45 @@ const CommentLabel = styled.p`
   font-weight: 500;
 `;
 
+const Mkdetail = styled.textarea`
+  padding: 16px 24px;
+  width: 80%;
+  height: 200px;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+`;
+
+const Mkproblem = styled.input`
+  padding: 16px 24px;
+  width: 80%;
+  height: 50px;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+`;
+
+const RadioContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const RadioButton = styled.input`
+  margin-right: 8px;
+`;
+
 function PostViewPage3(props) {
   const navigate = useNavigate();
-  const { problemId } = useParams(); //데이터 받는거
+  const { problemId } = useParams();
   console.log(problemId);
   const problemIdInt = parseInt(problemId, 10);
   const post = data.find((item) => {
     return item.id === problemIdInt;
   });
-  const [answer, setAnswer] = useState(""); //text area의 anwser 가져오는거
-  const str = post.content; //글을 가져오고
-  const regex = /\$%&123/g; //파싱을 조건
-  const result = str.split(regex); // 컨텐츠 분할
-  const anw = result[5].trim(); // 답 저장
-  const [resultText, setResultText] = useState(""); //정답유무
+  const [answer, setAnswer] = useState("");
+  const str = post.content;
+  const regex = /\$%&123/g;
+  const result = str.split(regex);
+  const anw = result[5].trim();
+  const [resultText, setResultText] = useState("");
   const answerWithoutSpace = answer.replace(/\s+/g, "");
   const anwWithoutSpace = anw.replace(/\s+/g, "");
   const handleAnswerSubmit = () => {
@@ -79,53 +104,149 @@ function PostViewPage3(props) {
     font-size: 20px;
   `;
   const [buttonTitle, setButtonTitle] = useState("정답 보기");
-  const toggleShowAnswer = () => {
-    setShowAnswer(!showAnswer);
-    setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
-  };
-  return (
+  const [isEditMode, setIsEditMode] = useState(false);
+const toggleEditMode = () => {
+  setIsEditMode(!isEditMode);
+};
+
+const handleTextChange = (index, value) => {
+  const newValues = [...texts];
+  newValues[index] = value;
+  setTexts(newValues);
+};
+
+const toggleShowAnswer = () => {
+  setShowAnswer(!showAnswer);
+  setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
+};
+
+    const title = post.title;
+    const [texts, setTexts] = useState([result[1], result[2], result[3], result[4]]);
+    const [re_write, setReWrite] = useState(result[0]);
+    const [re_title, setReTitle] = useState(post.title);
+    const [re_answer, setReAnswer] = useState(result[5]);
+    
+    const handleRadioButtonChange = (event) => {
+      const selectedAnswer = event.target.value;
+      const selectedAnswerIndex = result.indexOf(selectedAnswer);
+      setAnswer(selectedAnswerIndex.toString());
+    };
+    
+    
+    return (
     <Wrapper>
     <Container>
-      <Buttons
-        title="뒤로 가기"
-        onClick={() => {
-          navigate(`/categories/${post.category.id}/problems`);
-        }}
-      />
-      <Buttons
-          title="수정"
-          onClick={() => navigate(`/post-write3/${problemId}`)}
-        />
-        <Buttons
-        title = "삭제"
-        />
-      <TitleText>{post.title}</TitleText>
-      <PostContainer>
-        <ContentText>{result[0]}</ContentText>
-      </PostContainer>
-        <h4>1.{result[1]}</h4>
-        <h4>2.{result[2]}</h4>
-        <h4>3.{result[3]}</h4>
-        <h4>4.{result[4]}</h4>
-      <AnswerList>answers = {post.answers}</AnswerList>
-      <hr></hr>
-      <TextInput
-        height={40}
-        value={answer}
-        onChange={(event) => {
-          setAnswer(event.target.value);
-        }}
-      />
-      <Buttons title="정답 제출" onClick={handleAnswerSubmit} />
-      <h4>result: {resultText}</h4>
+    <Buttons
+    title="뒤로 가기"
+    onClick={() => {
+    navigate(`/categories/${post.category.id}/problems`);
+    }}
+    />
+    <Buttons
+  title="댓글보기"
+  onClick={() => navigate(`/problems/${problemId}/comments`)}
+/>
 
-      <Buttons title={buttonTitle} onClick={toggleShowAnswer} />
-      {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
-      <hr/>
-      <Buttons title="댓글보기"onClick={() => navigate(`/problems/${problemId}/comments`)}/>
-    </Container>
-  </Wrapper>
-  );
+    <br />
+    <Buttons title="삭제" />
+    <hr />
+    {isEditMode ? (
+    <>
+    <h2>수정 문제 제목</h2>
+    <input
+    style={{ width: "100%", height: "50px" }}
+    value={re_title}
+    onChange={(event) => {
+    setReTitle(event.target.value);
+    }}
+    />
+    <h2>수정 문제 내용</h2>
+        <textarea
+          style={{ width: "100%", height: "100px" }}
+          value={re_write}
+          placeholder="정답부분을$%&123사이에 넣어주세요 ex) 2002년 월드컵의 마스코트는 $%&123정답부분$%&123이다."
+          onChange={(event) => {
+            setReWrite(event.target.value);
+          }}
+        />
+        <h2>수정 문제 정답 예시</h2>
+        {texts.map((text, index) => (
+          <div key={index}>
+            <span>{index + 1}. </span>
+            <Mkproblem
+              value={text}
+              onChange={(event) => {
+                handleTextChange(index, event.target.value);
+              }}
+            />
+          </div>
+        ))}
+        <h2>수정 정답</h2>
+        <TextInput
+          style={{ width: "100%", height: "200px" }}
+          value={re_answer}
+          onChange={(event) => {
+            setReAnswer(event.target.value);
+          }}
+        />
+        <br />
+        <Buttons title="저장" onClick={toggleEditMode} />
+        <hr />
+      </>
+    ) : (
+      <Buttons title="수정" onClick={toggleEditMode} />
+    )}
+
+    <TitleText>{post.title}</TitleText>
+    <PostContainer>
+      <ContentText>{result[0]}</ContentText>
+    </PostContainer>
+    <RadioContainer>
+  <RadioButton
+    type="radio"
+    value={result[1]}
+    checked={answer === "1"}
+    onChange={handleRadioButtonChange}
+  />
+  <label>{result[1]}</label>
+</RadioContainer>
+<RadioContainer>
+  <RadioButton
+    type="radio"
+    value={result[2]}
+    checked={answer === "2"}
+    onChange={handleRadioButtonChange}
+  />
+  <label>{result[2]}</label>
+</RadioContainer>
+<RadioContainer>
+  <RadioButton
+    type="radio"
+    value={result[3]}
+    checked={answer === "3"}
+    onChange={handleRadioButtonChange}
+  />
+  <label>{result[3]}</label>
+</RadioContainer>
+<RadioContainer>
+  <RadioButton
+    type="radio"
+    value={result[4]}
+    checked={answer === "4"}
+    onChange={handleRadioButtonChange}
+  />
+  <label>{result[4]}</label>
+</RadioContainer>
+<AnswerList>answers = {post.answers}</AnswerList>
+<hr></hr>
+<Buttons title="정답 제출" onClick={handleAnswerSubmit} />
+<h4>result: {resultText}</h4>
+<Buttons title={buttonTitle} onClick={toggleShowAnswer} />
+    {showAnswer && <Result>정답은 {anw} 입니다!</Result>}
+    <hr />
+  </Container>
+</Wrapper>
+);
 }
 
 export default PostViewPage3;

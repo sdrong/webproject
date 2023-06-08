@@ -56,17 +56,7 @@ const SecretInput = styled.input`
 `;
 
 const MyBlock = styled.div`
-  .wrapper-class {
-    width: 100%;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-  }
-  .editor {
-    height: 500px !important;
-    border: 1px solid #f1f1f1 !important;
-    padding: 5px !important;
-    border-radius: 2px !important;
-  }
+width: 80%;
 `;
 
 const IntroduceContent = styled.div`
@@ -145,51 +135,39 @@ function TestEditorForm(props) {
   };
 
   return (
-    
     <Wrapper>
-      
       <MyBlock>
         <Buttons
           title="뒤로 가기"
           onClick={() => {
-            navigate(`/categories/`);
+            navigate(-1);
           }}
         />
         
         <BottomMargin />
-        <Editor
-          // 에디터와 툴바 모두에 적용되는 클래스
-          wrapperClassName="wrapper-class"
-          // 에디터 주변에 적용된 클래스
-          editorClassName="editor"
-          // 툴바 주위에 적용된 클래스
-          toolbarClassName="toolbar-class"
-          // 툴바 설정
-          toolbar={{
-            // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
-            list: { inDropdown: true },
-            textAlign: { inDropdown: true },
-            link: { inDropdown: true },
-            history: { inDropdown: false },
-          }}
-          placeholder="정답부분을???로 표기하여 주세요 ex) 2002년 월드컵의 마스코트는 ???이다."
-          // 한국어 설정
-          localization={{
-            locale: "ko",
-          }}
-          // 초기값 설정
-          editorState={editorState}
-          // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
-          onEditorStateChange={onEditorStateChange}
-        />
-        <h3>답</h3>
-        <TextInput
-          height={40}
-          value={answer}
-          onChange={(event) => {
-            setAnswer(event.target.value);
-          }}
-        />
+        <h2>문제 제목(단답형)</h2>
+        <TitleInput
+           value={title}
+           onChange={(event) => {
+             setTitle(event.target.value);
+           }}
+         />
+         <h2>문제내용</h2>
+         <Mkproblem
+           placeholder="정답부분을???로 표기하여 주세요 ex) 2002년 월드컵의 마스코트는 ???이다."
+           value={text}
+           onChange={(event) => {
+             setText(event.target.value);
+           }}
+         />
+         <h3>답</h3>
+         <TextInput
+           height={40}
+           value={answer}
+           onChange={(event) => {
+             setAnswer(event.target.value);
+           }}
+         />
         <h3>비밀번호</h3>
         <SecretInput
           height={40}

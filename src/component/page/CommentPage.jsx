@@ -43,7 +43,7 @@ function CommentPage(props) {
   return (
     <Wrapper>
       <Container>
-        <Buttons title="뒤로 가기" onClick={() => navigate(`/categories`)} />
+        <Buttons title="뒤로 가기" onClick={() => navigate(-1)} />
         {/* 수정된 부분: cmmList를 전달 */}
         <CommentList comments={cmmList} />
         <Mkproblem

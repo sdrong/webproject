@@ -47,6 +47,11 @@ const [text, setText] = useState(contentdata);
   return (
     <Wrapper>
       <Container>
+      <Buttons
+          title="뒤로 가기"
+          onClick={() => navigate(-1)}
+        />
+        <hr/>
         <Mkproblem
           value={text}
           onChange={(event) => {
@@ -57,7 +62,7 @@ const [text, setText] = useState(contentdata);
         <Buttons
           title="댓글 수정하기"
           onClick={() => {
-            navigate("/");
+            navigate(-1);
           }}
         />
       </Container>
