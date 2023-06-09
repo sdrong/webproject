@@ -7,6 +7,7 @@ import Buttons from "../ui/Buttons";
 import data from "../../data.json";
 import AnswerList from "../list/AnswerList";
 import axios from "axios";
+import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -84,6 +85,7 @@ function levenshteinDistance(strA, strB) {
 function PostViewPage2(props) {
   useEffect(() => {
     getProblem();
+    findUserById();
   }, []);
 
   // 주관식
@@ -119,6 +121,33 @@ function PostViewPage2(props) {
 
   // 수정된 content
   const [modifiedContent, setModifiedContent] = useState();
+
+  // - 명칭: find User By Id
+  // - url: '/users/{userId}'
+  // - url 예시: 'http://localhost:8080/users/3'
+  // - method: GET
+  // - 내용: userId로 1명의 회원정보 조회
+  // - 토큰 담긴 헤더 필수 유무: O
+  // - 반환되는 json 예시:
+  // {
+  //     "id": 3,
+  //     "loginId": "테스트아디3",
+  //     "username": "테스트이름3",
+  //     "solvableCount": 5
+  // }
+
+  const [userInfo, setUserInfo] = useState();
+  async function findUserById() {
+    await axios
+      .get(`http://localhost:8080/users/${userInfo.id}`)
+      .then((response) => {
+        setUserInfo(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   // - url: '/problems/{problemId}'
   // - method: GET

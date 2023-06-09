@@ -81,18 +81,6 @@ function PostPage(props) {
       });
   }
 
-  // TODO: update recommand
-  // - 명칭: update Recommend
-  // - url: '/recommend-problem/{problemId}'
-  // - url 예시: 'http://localhost:8080/recommend-problem/1'
-  // - method: PUT
-  // - 내용: 문제 추천 기능
-  // - 토큰 담긴 헤더 필수 유무: O
-
-  // async function updateRecommand() {
-  //   await axios.put(`/recommand-problem/${mainId}`);
-  // }
-
   return (
     <Wrapper>
       <Container>

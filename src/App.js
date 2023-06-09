@@ -16,7 +16,7 @@ import PostViewPage from './component/page/PostViewPage';
 import PostViewPage2 from "./component/page/PostViewPage2";
 import PostViewPage3 from "./component/page/PostViewPage3";
 import CommentPage from "./component/page/CommentPage";
-import Update_CommentPage from "./component/page/Upadata_CommentPage";
+import Update_CommentPage from "./component/page/UpadataCommentPage";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createGlobalStyle } from 'styled-components';
@@ -61,10 +61,9 @@ function App(props) {
   // // // spring과 통신하는 부분
 
   return (
-    
       <BrowserRouter>
       <MainTitleBox>
-        <MainTitleText to="/">문제만들기 사이트</MainTitleText>
+        <MainTitleText>문제만들기 사이트</MainTitleText>
       </MainTitleBox>
       <Routes>
         <Route index element={<MainPage />} />
@@ -77,7 +76,7 @@ function App(props) {
         <Route path="/problems2/:problemId" element={<PostViewPage2 />} />
         <Route path="/problems3/:problemId" element={<PostViewPage3 />} />
         <Route path="/problems/:problemId/comments" element={<CommentPage />} />
-        <Route path="/comments/:commentId" element = {<Update_CommentPage/>}/>
+        <Route path="/comments/:commentId" element = {<UpdateCommentPage/>}/>
         <Route path="/login" element = {<LoginPage/>}/>
         <Route path="/signup" element = {<SignupPage/>}/>
       </Routes>

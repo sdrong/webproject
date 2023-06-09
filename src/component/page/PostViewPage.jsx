@@ -59,6 +59,7 @@ const Result = styled.h4`
 function PostViewPage(props) {
   useEffect(() => {
     getProblem();
+    findUserById();
   }, []);
 
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ function PostViewPage(props) {
   //   //쓸 데이터id 찾기
   //   return item.id === problemIdInt;
   // });
-  const solvedusers = post.solveUsers; //푼사람 목록
+  // const solvedusers = post.solveUsers; //푼사람 목록
   // const users = post.user;
   //text area의 anwser 가져오는거
   const [answer, setAnswer] = useState("");
@@ -123,7 +124,7 @@ function PostViewPage(props) {
       });
   }
 
-  // - 명칭(내가 붙인 이름이니까 신경안쓰고 참고만 하면됨): find User By Id
+  // - 명칭: find User By Id
   // - url: '/users/{userId}'
   // - url 예시: 'http://localhost:8080/users/3'
   // - method: GET
@@ -138,7 +139,7 @@ function PostViewPage(props) {
   // }
 
   const [userInfo, setUserInfo] = useState();
-  async function findUserId() {
+  async function findUserById() {
     await axios
       .get(`http://localhost:8080/users/${userInfo.id}`)
       .then((response) => {
@@ -216,6 +217,25 @@ function PostViewPage(props) {
         title: modifiedTitle,
         content: modifiedContent,
       })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // TODO: ViewPage2,3 에도 updateRecommand 뿌려줘야 함
+  // - 명칭: update Recommend
+  // - url: '/recommend-problem/{problemId}'
+  // - url 예시: 'http://localhost:8080/recommend-problem/1'
+  // - method: PUT
+  // - 내용: 문제 추천 기능
+  // - 토큰 담긴 헤더 필수 유무: O
+
+  async function updateRecommand() {
+    await axios
+      .put(`/recommand-problem/${problemId}`)
       .then((response) => {
         console.log(response);
       })

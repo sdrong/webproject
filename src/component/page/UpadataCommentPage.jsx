@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import CommentList from "../list/CommentList";
+import TextInput from "../ui/TextInput";
 import Buttons from "../ui/Buttons";
-import { ListGroup } from "react-bootstrap";
 import axios from "axios";
 import cmmdata from "../../commentdata.json";
 
@@ -15,6 +14,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const Container = styled.div`
   width: 100%;
   max-width: 720px;
@@ -34,45 +34,21 @@ const Mkproblem = styled.textarea`
   border-radius: 4px;
 `;
 
-function CommentPage(props) {
+function Update_CommentPage(props) {
   useEffect(() => {
     getComment();
   }, []);
 
   const navigate = useNavigate();
-  const { problemId } = useParams();
+  const { commentId } = useParams();
+  const datas = comment.filter((item) => item.id === parseInt(commentId));
+
+  const contentdata = datas[0]?.content;
+  const [text, setText] = useState(contentdata);
+
   const [comment, setComment] = useState();
-  const [commentContent, setCommentContent] = useState("");
-  const cmmList = comment;
 
-  // - 명칭(내가 붙인 이름이니까 신경안쓰고 참고만 하면됨): save Comment
-  // - url: '/problems/{problemId}/comments'
-  // - url 예시: 'http://localhost:8080/problems/1/comments'
-  // - method: POST
-  // - 내용: 댓글 작성.
-  // - 토큰 담긴 헤더 필수 유무: O
-  // - 입력해야할 json 예시:
-  // {
-  //     "content": "댓글 내용입니다~!ㄱㄴㄷ4"
-  // }
-
-  async function saveComment() {
-    await axios.post(
-      `/problems/${problemId}/comments`,
-      {
-        // 댓글 내용
-        content: commentContent,
-      }
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    );
-  }
-
-  // - 명칭(내가 붙인 이름이니까 신경안쓰고 참고만 하면됨): problem Load Comments
+  // - 명칭: problem Load Comments
   // - url: '/problems/{problemId}/comments'
   // - url 예시: 'http://localhost:8080/problems/1/comments'
   // - method: GET
@@ -99,22 +75,48 @@ function CommentPage(props) {
       });
   }
 
+  // - 명칭: update Comment
+  // - url: '/comments/{commentId}'
+  // - url 예시: 'http://localhost:8080/comments/2'
+  // - method: PUT
+  // - 내용: 댓글 수정.
+  // - 토큰 담긴 헤더 필수 유무: O
+
+  // - 입력해야할 json 예시:
+  // {
+  //     "content": "수정한 댓글 내용임."
+  // }
+
+  async function updateComment() {
+    await axios
+      .put(`/comments/${commentId}`, {
+        content: text,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <Wrapper>
       <Container>
         <Buttons title="뒤로 가기" onClick={() => navigate(-1)} />
-        {/* 수정된 부분: cmmList를 전달 */}
-        <CommentList comments={cmmList} />
+        <hr />
         <Mkproblem
-          value={commentContent}
+          value={text}
           onChange={(event) => {
-            setCommentContent(event.target.value);
+            setText(event.target.value);
           }}
         />
+        <hr />
         <Buttons
-          title="댓글 작성하기"
+          title="댓글 수정하기"
           onClick={() => {
-            saveComment();
+            updateComment();
+            navigate(-1);
           }}
         />
       </Container>
@@ -122,4 +124,4 @@ function CommentPage(props) {
   );
 }
 
-export default CommentPage;
+export default Update_CommentPage;

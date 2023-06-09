@@ -217,7 +217,7 @@ function TestEditorForm(props) {
         /> */}
         <hr />
         <Buttons
-          onSubmit={handleSubmit}
+          onSubmit={saveProblem}
           title="문제 작성하기"
           onClick={() => {
             saveProblem();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import CommentList from "../list/CommentList";
@@ -6,6 +6,8 @@ import TextInput from "../ui/TextInput";
 import Buttons from "../ui/Buttons";
 import data from "../../data.json";
 import AnswerList from "../list/AnswerList";
+import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
+import axios from "axios";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -76,6 +78,10 @@ const RadioButton = styled.input`
 `;
 
 function PostViewPage3(props) {
+  useEffect(() => {
+    getProblem();
+    findUserById();
+  });
   // 객관식
   const navigate = useNavigate();
   const { problemId } = useParams();
@@ -196,6 +202,33 @@ function PostViewPage3(props) {
       });
   }
 
+  // - 명칭: find User By Id
+  // - url: '/users/{userId}'
+  // - url 예시: 'http://localhost:8080/users/3'
+  // - method: GET
+  // - 내용: userId로 1명의 회원정보 조회
+  // - 토큰 담긴 헤더 필수 유무: O
+  // - 반환되는 json 예시:
+  // {
+  //     "id": 3,
+  //     "loginId": "테스트아디3",
+  //     "username": "테스트이름3",
+  //     "solvableCount": 5
+  // }
+
+  const [userInfo, setUserInfo] = useState();
+  async function findUserById() {
+    await axios
+      .get(`/users/${userInfo.id}`)
+      .then((response) => {
+        setUserInfo(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const handleAnswerSubmit = () => {
     if (answerWithoutSpace === anwWithoutSpace) {
       setResultText("정답입니다!");
@@ -249,7 +282,8 @@ function PostViewPage3(props) {
         <Buttons
           title="뒤로 가기"
           onClick={() => {
-            navigate(`/categories/${post.category.id}/problems`);
+            navigate(-1);
+            // navigate(`/categories/${post.category.id}/problems`);
           }}
         />
         <Buttons
@@ -325,7 +359,7 @@ function PostViewPage3(props) {
           <Buttons title="수정" onClick={toggleEditMode} />
         )}
 
-        <TitleText>{post.title}</TitleText>
+        <TitleText>{problem.title}</TitleText>
         <PostContainer>
           <ContentText>{result[0]}</ContentText>
         </PostContainer>
@@ -365,7 +399,6 @@ function PostViewPage3(props) {
           />
           <label>{result[4]}</label>
         </RadioContainer>
-        <AnswerList>answers = {post.answers}</AnswerList>
         <hr></hr>
         <Buttons
           title="정답 제출"
