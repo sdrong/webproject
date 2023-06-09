@@ -9,9 +9,10 @@ function CommentList(props) {
 
   return (
     <Card style={{ border: "none", marginLeft: "0" }}>
-      {comments.map((comment) => {
-        return <CommentListItem key={comment.id} comment={comment} />;
-      })}
+      {true &&
+        comments.map((comment) => {
+          return <CommentListItem key={comment.id} comment={comment} />;
+        })}
     </Card>
   );
 }

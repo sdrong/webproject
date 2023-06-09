@@ -36,9 +36,12 @@ function MainListItem(props) {
         }}
       >
         <Card.Body>
-          <Card.Img variant="top" src={OperatingSystemImage} />
+          <Card.Img variant="top" src={post.image} />
           <Card.Title>{post.name}</Card.Title>
-          <Button variant="primary" onClick={() => navigate(`/categories/${post.id}/problems`)}>
+          <Button
+            variant="primary"
+            onClick={() => navigate(`/categories/${post.id}/problems`)}
+          >
             문제 풀러가기
           </Button>
         </Card.Body>

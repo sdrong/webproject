@@ -16,7 +16,7 @@ import PostViewPage from './component/page/PostViewPage';
 import PostViewPage2 from "./component/page/PostViewPage2";
 import PostViewPage3 from "./component/page/PostViewPage3";
 import CommentPage from "./component/page/CommentPage";
-import Update_CommentPage from "./component/page/UpadataCommentPage";
+import UpdateCommentPage from "./component/page/UpadataCommentPage";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createGlobalStyle } from 'styled-components';

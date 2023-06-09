@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: 80 %;
   max-width: 720px;
 
   & > * {
@@ -29,12 +29,39 @@ const Container = styled.div`
 
 function MainPage(props) {
   const navigate = useNavigate();
-  const { title, setTitle } = useState();
-  const { categoryData, setCateogryData } = useState();
+  // const { title, setTitle } = useState();
+  const [categoryData, setCateogryData] = useState([]);
 
   useEffect(() => {
     getCategory();
   }, []);
+
+  /*
+    - 명칭: find All Categories
+    - url: '/categories'
+    - url 예시: 'http://localhost:8080/categories'
+    - method: GET
+    - 내용: 모든 카테고리 목록들을 이름 가나다순으로 조회.
+    - 토큰 담긴 헤더 필수 유무: X
+    - 반환되는 json 예시:
+    [
+        {
+            "id": 2,
+            "name": "네트워크",
+            "image": "AQER"
+        },
+        {
+            "id": 3,
+            "name": "빅데이터",
+            "image": "ARER"
+        },
+        {
+            "id": 1,
+            "name": "운영체제",
+            "image": "AQEB"
+        }
+    ]
+  */
 
   async function getCategory() {
     await axios
@@ -66,7 +93,8 @@ function MainPage(props) {
           회원가입
         </Buttons>
         <MainList
-          posts={categoryData} //과목 목록
+          //과목 목록
+          posts={categoryData}
           onClickItem={(item) => {
             navigate(`/categories/${item.id}/problems`);
           }}

@@ -20,14 +20,10 @@ function MainList(props) {
 
   return (
     <Wrapper style={{ display: "inline" }}>
-      {posts.map((post) => {
-        return (
-          <MainListItem
-            key={post.id}
-            post={post}
-          />
-        );
-      })}
+      {true &&
+        posts.map((post) => {
+          return <MainListItem key={post.id} post={post} />;
+        })}
     </Wrapper>
   );
 }

@@ -166,17 +166,18 @@ function PostWritePage3(props) {
             handleTextChange(event.target.value);
           }}
         />
-        {texts.map((text, index) => (
-          <div key={index}>
-            <span>{index + 1}. </span>
-            <Mkproblem
-              value={text}
-              onChange={(event) => {
-                handleTextChange(index, event.target.value);
-              }}
-            />
-          </div>
-        ))}
+        {true &&
+          texts.map((text, index) => (
+            <div key={index}>
+              <span>{index + 1}. </span>
+              <Mkproblem
+                value={text}
+                onChange={(event) => {
+                  handleTextChange(index, event.target.value);
+                }}
+              />
+            </div>
+          ))}
         <h3>답</h3>
         <TextInput
           height={40}

@@ -229,13 +229,13 @@ function PostViewPage3(props) {
       });
   }
 
-  const handleAnswerSubmit = () => {
+  function handleAnswerSubmit() {
     if (answerWithoutSpace === anwWithoutSpace) {
       setResultText("정답입니다!");
     } else {
       setResultText("틀렸습니다.");
     }
-  };
+  }
   const [showAnswer, setShowAnswer] = useState(false);
   const Result = styled.h4`
     margin: 16px 0;
@@ -243,9 +243,9 @@ function PostViewPage3(props) {
   `;
   const [buttonTitle, setButtonTitle] = useState("정답 보기");
   const [isEditMode, setIsEditMode] = useState(false);
-  const toggleEditMode = () => {
+  function toggleEditMode() {
     setIsEditMode(!isEditMode);
-  };
+  }
 
   const handleTextChange = (index, value) => {
     const newValues = [...texts];
@@ -253,10 +253,10 @@ function PostViewPage3(props) {
     setTexts(newValues);
   };
 
-  const toggleShowAnswer = () => {
+  function toggleShowAnswer() {
     setShowAnswer(!showAnswer);
     setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
-  };
+  }
 
   const title = problem.title;
   const [texts, setTexts] = useState([
@@ -314,17 +314,18 @@ function PostViewPage3(props) {
               }}
             />
             <h2>수정 문제 정답 예시</h2>
-            {texts.map((text, index) => (
-              <div key={index}>
-                <span>{index + 1}. </span>
-                <Mkproblem
-                  value={text}
-                  onChange={(event) => {
-                    handleTextChange(index, event.target.value);
-                  }}
-                />
-              </div>
-            ))}
+            {true &&
+              texts.map((text, index) => (
+                <div key={index}>
+                  <span>{index + 1}. </span>
+                  <Mkproblem
+                    value={text}
+                    onChange={(event) => {
+                      handleTextChange(index, event.target.value);
+                    }}
+                  />
+                </div>
+              ))}
             <h2>수정 정답</h2>
             <TextInput
               style={{ width: "100%", height: "200px" }}
@@ -350,13 +351,13 @@ function PostViewPage3(props) {
                     "$%&123"
                 );
                 updateProblem();
-                toggleEditMode;
+                toggleEditMode();
               }}
             />
             <hr />
           </>
         ) : (
-          <Buttons title="수정" onClick={toggleEditMode} />
+          <Buttons title="수정" onClick={toggleEditMode()} />
         )}
 
         <TitleText>{problem.title}</TitleText>
@@ -404,7 +405,7 @@ function PostViewPage3(props) {
           title="정답 제출"
           onClick={() => {
             updateSolvableCount();
-            handleAnswerSubmit;
+            handleAnswerSubmit();
           }}
         />
         <h4>result: {resultText}</h4>
@@ -412,7 +413,7 @@ function PostViewPage3(props) {
           title={buttonTitle}
           onClick={() => {
             updateSolvableCount();
-            toggleShowAnswer;
+            toggleShowAnswer();
           }}
         />
         {showAnswer && <Result>정답은 {anw} 입니다!</Result>}

@@ -65,7 +65,7 @@ function PostPage(props) {
     }
   };
 
-  const { categoryData, setCateogryName } = useState();
+  const { categoryData, setCateogryData } = useState();
   const categoryId = categoryData.id;
 
   async function getCategory() {
@@ -73,7 +73,7 @@ function PostPage(props) {
       .get("/categories" + "/" + { mainId } + "/" + "problems")
       .then((response) => {
         console.log(response.data);
-        setCateogryName(response.data.categoryData);
+        setCateogryData(response.data);
         categoryId = categoryData.id;
       })
       .catch((error) => {

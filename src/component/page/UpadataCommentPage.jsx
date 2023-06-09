@@ -35,9 +35,9 @@ const Mkproblem = styled.textarea`
 `;
 
 function Update_CommentPage(props) {
-  useEffect(() => {
-    getComment();
-  }, []);
+  // useEffect(() => {
+  //   getComment();
+  // }, []);
 
   const navigate = useNavigate();
   const { commentId } = useParams();
@@ -63,17 +63,17 @@ function Update_CommentPage(props) {
   //         "recommendUsers": []
   //     },
 
-  async function getComment() {
-    await axios
-      .get(`/problems/${problemId}/comments`)
-      .then((response) => {
-        setComment(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // async function getComment() {
+  //   await axios
+  //     .get(`/problems/${problemId}/comments`)
+  //     .then((response) => {
+  //       setComment(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   // - 명칭: update Comment
   // - url: '/comments/{commentId}'

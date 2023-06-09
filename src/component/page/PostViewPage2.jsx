@@ -55,9 +55,11 @@ const CommentLabel = styled.p`
 `;
 
 function levenshteinDistance(strA, strB) {
-  const distanceMatrix = Array(strB.length + 1)
-    .fill(null)
-    .map(() => Array(strA.length + 1).fill(null));
+  const distanceMatrix =
+    true &&
+    Array(strB.length + 1)
+      .fill(null)
+      .map(() => Array(strA.length + 1).fill(null));
 
   for (let i = 0; i <= strA.length; i += 1) {
     distanceMatrix[0][i] = i;
@@ -253,14 +255,14 @@ function PostViewPage2(props) {
     font-size: 20px;
   `;
   const [buttonTitle, setButtonTitle] = useState("정답 보기");
-  const toggleShowAnswer = () => {
+  function toggleShowAnswer() {
     setShowAnswer(!showAnswer);
     setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
-  };
+  }
   const [isEditMode, setIsEditMode] = useState(false);
-  const toggleEditMode = () => {
+  function toggleEditMode() {
     setIsEditMode(!isEditMode);
-  };
+  }
 
   // const title = post.title;
   // const [re_write, setReWrite] = useState(result[0]); //수정한 답
@@ -323,13 +325,13 @@ function PostViewPage2(props) {
                     splitedProblem[1]
                 );
                 updateProblem();
-                toggleEditMode;
+                toggleEditMode();
               }}
             />
             <hr />
           </>
         ) : (
-          <Buttons title="수정" onClick={toggleEditMode} />
+          <Buttons title="수정" onClick={toggleEditMode()} />
         )}
         <TitleText>{problem.title}</TitleText>
         <PostContainer>
@@ -350,7 +352,7 @@ function PostViewPage2(props) {
           title={buttonTitle}
           onClick={() => {
             updateSolvableCount();
-            toggleShowAnswer;
+            toggleShowAnswer();
           }}
         />
         {showAnswer && <Result>정답은 {anw} 입니다!</Result>}

@@ -8,7 +8,7 @@ import data from "../../data.json";
 import AnswerList from "../list/AnswerList";
 import { Card } from "react-bootstrap";
 import axios from "axios";
-import { CheckToken } from "../../utils";
+import CheckToken from "../../utils/CheckToken";
 import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
 
 const Wrapper = styled.div`
@@ -86,13 +86,13 @@ function PostViewPage(props) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [buttonTitle, setButtonTitle] = useState("정답 보기");
   const [isEditMode, setIsEditMode] = useState(false);
-  const toggleShowAnswer = () => {
+  function toggleShowAnswer() {
     setShowAnswer(!showAnswer);
     setButtonTitle(showAnswer ? "정답 보기" : "정답 숨기기");
-  };
-  const toggleEditMode = () => {
+  }
+  function toggleEditMode() {
     setIsEditMode(!isEditMode);
-  };
+  }
 
   // 맨 처음에 데이터 가져와서 저장하는 부분
   const [problem, setProblem] = useState();
@@ -244,13 +244,13 @@ function PostViewPage(props) {
       });
   }
 
-  const handleAnswerSubmit = () => {
+  function handleAnswerSubmit() {
     if (answerWithoutSpace === anwWithoutSpace) {
       setResultText("정답입니다!");
     } else {
       setResultText("틀렸습니다.");
     }
-  };
+  }
 
   return (
     // 단답형 문제
@@ -305,45 +305,46 @@ function PostViewPage(props) {
                     splitedProblem[1]
                 );
                 updateProblem();
-                toggleEditMode;
+                toggleEditMode();
               }}
             />
             <hr />
           </>
         ) : (
-          <Buttons title="수정" onClick={toggleEditMode} />
+          <Buttons title="수정" onClick={toggleEditMode()} />
         )}
-        {["Success"].map((variant) => (
-          <Card
-            bg={variant.toLowerCase()}
-            key={variant}
-            text={variant.toLowerCase() === "light" ? "dark" : "white"}
-            className="mb-2"
-          >
-            <Card.Header>{problem.title}</Card.Header>
-            <Card.Body>
-              <Card.Text>
-                <PostContainer>
-                  <ContentText>{result[0]}</ContentText>
-                  <TextInput
-                    height={40}
-                    value={answer}
-                    onChange={(event) => {
-                      setAnswer(event.target.value);
-                    }}
-                  />
-                  <ContentText>{result[2]}</ContentText>
-                </PostContainer>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        ))}
+        {true &&
+          ["Success"].map((variant) => (
+            <Card
+              bg={variant.toLowerCase()}
+              key={variant}
+              text={variant.toLowerCase() === "light" ? "dark" : "white"}
+              className="mb-2"
+            >
+              <Card.Header>{problem.title}</Card.Header>
+              <Card.Body>
+                <Card.Text>
+                  <PostContainer>
+                    <ContentText>{result[0]}</ContentText>
+                    <TextInput
+                      height={40}
+                      value={answer}
+                      onChange={(event) => {
+                        setAnswer(event.target.value);
+                      }}
+                    />
+                    <ContentText>{result[2]}</ContentText>
+                  </PostContainer>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          ))}
         <hr></hr>
         <Buttons
           title="정답 제출"
           onClick={() => {
             updateSolvableCount();
-            handleAnswerSubmit;
+            handleAnswerSubmit();
           }}
         />
         <h4>result: {resultText}</h4>
@@ -352,7 +353,7 @@ function PostViewPage(props) {
           title={buttonTitle}
           onClick={() => {
             updateSolvableCount();
-            toggleShowAnswer;
+            toggleShowAnswer();
           }}
         />
         {showAnswer && <Result>정답은 [{anw}] 입니다!</Result>}

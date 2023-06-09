@@ -23,21 +23,22 @@ function PostList(props) {
 
   return (
     <Card style={{ border: "none", marginLeft: "0" }}>
-      {posts.map((post) => {
-        return (
-          <PostListItem
-            key={post.id}
-            post={post}
-            handleClick={() => {
-              var path = post.type == 1 ? "/problems" : "/problems2";
-              if (post.type === 3) {
-                path = "/problems3";
-              }
-              navigate(`${path}/${post.id}`);
-            }}
-          />
-        );
-      })}
+      {true &&
+        posts.map((post) => {
+          return (
+            <PostListItem
+              key={post.id}
+              post={post}
+              handleClick={() => {
+                var path = post.type == 1 ? "/problems" : "/problems2";
+                if (post.type === 3) {
+                  path = "/problems3";
+                }
+                navigate(`${path}/${post.id}`);
+              }}
+            />
+          );
+        })}
     </Card>
   );
 }
