@@ -20,6 +20,8 @@ import Update_CommentPage from "./component/page/Upadata_CommentPage";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createGlobalStyle } from 'styled-components';
+import LoginPage from "./component/page/LoginPage";
+import SignupPage from "./component/page/SignupPage";
 
 const MainTitleBox = styled.div`
     background-color: limegreen;
@@ -76,6 +78,8 @@ function App(props) {
         <Route path="/problems3/:problemId" element={<PostViewPage3 />} />
         <Route path="/problems/:problemId/comments" element={<CommentPage />} />
         <Route path="/comments/:commentId" element = {<Update_CommentPage/>}/>
+        <Route path="/login" element = {<LoginPage/>}/>
+        <Route path="/signup" element = {<SignupPage/>}/>
       </Routes>
     </BrowserRouter>
       );

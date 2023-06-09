@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { resolvePath, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MainList from "../list/MainList";
+import categoryData from "../../categoryData.json";
+import Buttons from "../ui/Buttons";
 import axios from "axios";
-import data from "../../data.json";
+import { Button } from "react-bootstrap";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -25,35 +28,49 @@ const Container = styled.div`
 `;
 
 function MainPage(props) {
-  // TODO: 백엔드 완료할 때까지 주석처리
-  // const [categoryList, setCateogryList] = useState();
+  const navigate = useNavigate();
+  const { title, setTitle } = useState();
+  const { categoryData, setCateogryData } = useState();
 
-  // async function getCategories() {
-  //   await axios
-  //     .get("/categories")
-  //     .then((response) => {
-  //       setCateogryList(response.data);
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
+  useEffect(() => {
+    getCategory();
+  }, []);
 
-  // useEffect(() => {
-  //   getCategories();
-  // }, []);
-
-  const categoryList = data;
+  async function getCategory() {
+    await axios
+      .get("/categories")
+      .then((response) => {
+        console.log(response.data);
+        setCateogryData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <Wrapper>
       <Container>
-        {categoryList && (
-          <MainList
-            posts={categoryList} //과목 목록들
-          />
-        )}
+        <Buttons
+          onClickItem={(item) => {
+            navigate(`/login`);
+          }}
+        >
+          로그인
+        </Buttons>
+        <Buttons
+          onClickItem={(item) => {
+            navigate(`/signup`);
+          }}
+        >
+          회원가입
+        </Buttons>
+        <MainList
+          posts={categoryData} //과목 목록
+          onClickItem={(item) => {
+            navigate(`/categories/${item.id}/problems`);
+          }}
+        />
       </Container>
     </Wrapper>
   );

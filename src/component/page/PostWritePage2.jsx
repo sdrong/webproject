@@ -58,28 +58,78 @@ function PostWritePage2(props) {
   const categories = "categories";
   const problem = "problem";
 
-  const handleSubmit = async (e) => {
-    e.preventDefalut();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefalut();
 
+  //   await axios
+  //     .post(baseUrl + "/" + categoryName + "problem", {
+  //       title: title,
+  //       content: content,
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // - 명칭: save Problem
+  // - url: '/categories/{categoryId}/problems'
+  // - url 예시: 'http://localhost:8080/categories/3/problems'
+  // - method: POST
+  // - 내용: 선택한 카테고리에서 신규 문제 생성.
+  // - 토큰 담긴 헤더 필수 유무: O
+  // - 참고: 제대로 생성되는지 확인용으로 반환값을 만들어두었지만, 이는 프론트단에서는 딱히 쓸모가없을것임.
+
+  // - 입력해야할 json 예시:
+  // {
+  //     "type": 2,
+  //     "title": "문제 제목이지요",
+  //     "content": "가나다라$%&123마바$%&123사아자차"
+  // }
+
+  // - 반환되는 json 예시:
+  // {
+  //     "id": 2,
+  //     "type": 2,
+  //     "title": "문제 제목이지요",
+  //     "content": "가독성을 위해 문제내용은 생략하여 응답함.",
+  //     "user": {
+  //         "solvableCount": 5,
+  //         "id": 2,
+  //         "loginId": "테스트아디2",
+  //         "loginPw": null,
+  //         "username": "테스트이름2",
+  //         "authority": null
+  //     },
+  //     "category": {
+  //         "id": 3,
+  //         "name": "빅데이터",
+  //         "image": "ARER"
+  //     }
+  // }
+
+  async function saveProblem() {
     await axios
-      .post(baseUrl + "/" + categoryName + "problem", {
+      .post(`/categories/${writeId}/problems`, {
+        type: writeId,
         title: title,
-        content: content,
+        content: text + "$%&123" + answer,
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((response) => {
+        console.log((error) => {
+          console.log(error);
+        });
       });
-  };
+  }
 
   return (
     <Wrapper>
-      <Buttons
-          title="뒤로 가기"
-          onClick={() => navigate(-1)}
-        />
+      <Buttons title="뒤로 가기" onClick={() => navigate(-1)} />
       <Container>
         <h2>문제 제목</h2>
         <TitleInput
@@ -103,20 +153,20 @@ function PostWritePage2(props) {
             setAnswer(event.target.value);
           }}
         />
-        <h3>비밀번호</h3>
+        {/* <h3>비밀번호</h3>
         <SecretInput
           height={40}
           value={secret}
           onChange={(event) => {
             setSecret(event.target.value);
           }}
-        />
+        /> */}
         <hr />
         <Buttons
-          onSubmit={handleSubmit}
+          onSubmit={saveProblem}
           title="문제 작성하기"
           onClick={() => {
-            navigate("/");
+            navigate(-1);
           }}
         />
       </Container>

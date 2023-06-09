@@ -39,19 +39,41 @@ function Update_CommentPage(props) {
   const { commentId } = useParams();
   const datas = cmmdata.filter((item) => item.id === parseInt(commentId));
 
-const contentdata = datas[0]?.content;
-const [text, setText] = useState(contentdata);
+  const contentdata = datas[0]?.content;
+  const [text, setText] = useState(contentdata);
 
-  const [comment, setComment] = useState(null);
+  const [comment, setComment] = useState();
+
+  // - 명칭(내가 붙인 이름이니까 신경안쓰고 참고만 하면됨): update Comment
+  // - url: '/comments/{commentId}'
+  // - url 예시: 'http://localhost:8080/comments/2'
+  // - method: PUT
+  // - 내용: 댓글 수정.
+  // - 토큰 담긴 헤더 필수 유무: O
+
+  // - 입력해야할 json 예시:
+  // {
+  //     "content": "수정한 댓글 내용임."
+  // }
+
+  async function updateComment() {
+    await axios
+      .put(`/comments/${commentId}`, {
+        content: text,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <Wrapper>
       <Container>
-      <Buttons
-          title="뒤로 가기"
-          onClick={() => navigate(-1)}
-        />
-        <hr/>
+        <Buttons title="뒤로 가기" onClick={() => navigate(-1)} />
+        <hr />
         <Mkproblem
           value={text}
           onChange={(event) => {
@@ -62,6 +84,7 @@ const [text, setText] = useState(contentdata);
         <Buttons
           title="댓글 수정하기"
           onClick={() => {
+            updateComment();
             navigate(-1);
           }}
         />

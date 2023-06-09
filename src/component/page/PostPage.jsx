@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link, Route } from "react-router-dom";
 import styled from "styled-components";
 import PostList from "../list/PostList";
@@ -38,6 +38,10 @@ const RadioLabel = styled.label`
 `;
 
 function PostPage(props) {
+  useEffect(() => {
+    getCategory();
+  }, []);
+
   const navigate = useNavigate();
   const { mainId } = useParams();
   const mainIdInt = parseInt(mainId, 10);
@@ -51,7 +55,7 @@ function PostPage(props) {
     setSelectedOption(option);
   };
 
-  const handleButtonClick = () => { 
+  const handleButtonClick = () => {
     if (selectedOption === "빈칸") {
       navigate(`/post-write1/${mainId}`);
     } else if (selectedOption === "서술형") {
@@ -61,16 +65,39 @@ function PostPage(props) {
     }
   };
 
+  const { categoryData, setCateogryName } = useState();
+  const categoryId = categoryData.id;
+
+  async function getCategory() {
+    await axios
+      .get("/categories" + "/" + { mainId } + "/" + "problems")
+      .then((response) => {
+        console.log(response.data);
+        setCateogryName(response.data.categoryData);
+        categoryId = categoryData.id;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // TODO: update recommand
+  // - 명칭: update Recommend
+  // - url: '/recommend-problem/{problemId}'
+  // - url 예시: 'http://localhost:8080/recommend-problem/1'
+  // - method: PUT
+  // - 내용: 문제 추천 기능
+  // - 토큰 담긴 헤더 필수 유무: O
+
+  // async function updateRecommand() {
+  //   await axios.put(`/recommand-problem/${mainId}`);
+  // }
+
   return (
     <Wrapper>
       <Container>
         <Buttons title="뒤로 가기" onClick={() => navigate(`/categories`)} />
-        <PostList
-          posts={problemList}
-          onClickItem={(item) => {
-            // TODO: 클릭한 항목에 대한 동작 구현
-          }}
-        />
+        <PostList posts={problemList} onClickItem={(item) => {}} />
         <RadioContainer>
           <RadioLabel>
             <input
@@ -103,7 +130,7 @@ function PostPage(props) {
             객관식
           </RadioLabel>
         </RadioContainer>
-        <Buttons title="글 작성하기" onClick={handleButtonClick} />       
+        <Buttons title="글 작성하기" onClick={handleButtonClick} />
       </Container>
     </Wrapper>
   );
