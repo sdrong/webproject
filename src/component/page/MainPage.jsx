@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 80 %;
+  width: 80%;
   max-width: 720px;
 
   & > * {

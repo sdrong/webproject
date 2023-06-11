@@ -35,7 +35,19 @@ function SignupPage() {
 
   const [tokenUserId, setTokenUserId] = useState();
 
-  async function postSignUp() {
+  const handleChangeLoginId = (event) => {
+    setUserId(event.target.value);
+  }
+
+  const handleChangePw = (event) => {
+    setUserPw(event.target.value);
+  }
+
+  const handleChangeName = (event) => {
+    setUsername(event.target.value);
+  }
+
+  const postSignUp = async (userId, userPw, username, e) => {
     await axios
       .post("/signup", {
         loginId: userId,
@@ -102,9 +114,7 @@ function SignupPage() {
     <div class="row">
       <div class="col">
         <input
-          onChange={() => {
-            setUserId();
-          }}
+          onChange={handleChangeLoginId}
           id="userId"
           type="text"
           class="form-control"
@@ -114,9 +124,7 @@ function SignupPage() {
       </div>
       <div class="col">
         <input
-          onChange={() => {
-            setUserPw();
-          }}
+          onChange={handleChangePw}
           id="userPassword"
           type="text"
           class="form-control"
@@ -126,9 +134,7 @@ function SignupPage() {
       </div>
       <div class="col">
         <input
-          onChange={() => {
-            setUsername();
-          }}
+          onChange={handleChangeName}
           id="username"
           type="text"
           class="form-control"
@@ -139,9 +145,9 @@ function SignupPage() {
       <button
         type="button"
         class="btn btn-info"
-        onClick={() => {
-          postSignUp();
-          navigate(-1);
+        onClick={(event) => {
+          postSignUp(userId, userPw, username);
+          //navigate(-1);
         }}
       >
         회원가입
