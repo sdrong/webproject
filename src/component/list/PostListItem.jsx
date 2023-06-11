@@ -45,7 +45,7 @@ function PostListItem(props) {
     }
   };
   return (
-    <Card bg="success" text="white" className="mb-2">
+    <Card bg="gray" text="black" className="mb-2">
       <Card.Header onClick={(e) => e.stopPropagation()}>
         <h4>
           <span
