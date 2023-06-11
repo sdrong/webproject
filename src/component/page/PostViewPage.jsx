@@ -316,10 +316,10 @@ function PostViewPage(props) {
         {true &&
           ["Success"].map((variant) => (
             <Card
-              bg={variant.toLowerCase()}
-              key={variant}
-              text={variant.toLowerCase() === "light" ? "dark" : "white"}
-              className="mb-2"
+               bg="gray"
+            key={variant}
+            text="black"
+            className="mb-2"
             >
               <Card.Header>{problem.title}</Card.Header>
               <Card.Body>
