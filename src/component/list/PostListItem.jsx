@@ -6,9 +6,8 @@ const Wrapper = styled.div`
   width: calc(100% - 32px);
   padding: 16px;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between;
   border: 1px solid grey;
   border-radius: 8px;
   cursor: pointer;
@@ -24,26 +23,27 @@ const TitleText = styled.p`
 `;
 
 const SomeContent = styled.p`
-    font-size: 13px;np
-    font-weight: 300;
+  font-size: 13px;
+  font-weight: 300;
 `;
 
 function PostListItem(props) {
   const { post, handleClick } = props;
   const str = post.content;
   const regex = /\$%&123/g;
-  const result = str.split(regex); //
+  const result = str.split(regex);
   const [good, setGood] = useState(post.recommendCount);
   const userid = 2;
   const isRecommended = post.recommendUsers.includes(userid);
   const handleGoodClick = (e) => {
-    e.stopPropagation(); // 부모 div로의 이벤트 전파 방지
+    e.stopPropagation();
     if (!isRecommended) {
       setGood(good + 1);
-      // 백엔드 업데이트 또는 추천으로 표시하는 요청 전송
-      // 예: sendRecommendation(commentId);
+      // Send recommendation request to backend or update the recommendation count
+      // Example: sendRecommendation(commentId);
     }
   };
+
   return (
     <Card bg="gray" text="black" className="mb-2">
       <Card.Header onClick={(e) => e.stopPropagation()}>

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TextInput from "../ui/TextInput";
 import Buttons from "../ui/Buttons";
-// import Editor from "../ui/Editor";
 import axios from "axios";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
@@ -75,103 +74,39 @@ const BottomMargin = styled.div`
 `;
 
 function TestEditorForm(props) {
-  // useState로 상태관리하기 초기값은 EditorState.createEmpty()
-  // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  // editorState의 현재 contentState 값을 원시 JS 구조로 변환시킨뒤, HTML 태그로 변환시켜준다.
   const editorToHtml = draftToHtml(
     convertToRaw(editorState.getCurrentContent())
   );
   const navigate = useNavigate();
-
-  const { writeId } = useParams(); //저장할때 어느 과목에 저장할지 id받아옴
-  console.log(writeId);
+  const { writeId } = useParams();
   const problemIdInt = parseInt(writeId, 10);
-
-  // const pp = data.find((item) => {
-  //   //쓸 데이터id 찾기
-  //   return item.id === problemIdInt;
-  // });
-  // const st = pp.content; //글을 가져오고
-  const regex = /\$%&123/g; //파싱을 조건
-  // const results = st.split(regex); // 컨텐츠 분할
-
-  const [answer, setAnswer] = useState(""); //답
-  const [text, setText] = useState(""); //문제내용
-  const [title, setTitle] = useState(""); // 제목
-  const [secret, setSecret] = useState(""); //비밀번호
-  const str = editorToHtml; //글을 가져오고
-  const result = str.split("???"); // 컨텐츠 분할
-  const content = result[0] + "$%&123" + answer + "$%&123" + result[1]; // 문제내용과 답을 파싱하기위해 합쳐놓은 전체
-  // const baseUrl = "http://localhost:3000";
+  const [answer, setAnswer] = useState("");
+  const [text, setText] = useState("");
+  const [title, setTitle] = useState("");
+  const [secret, setSecret] = useState("");
+  const str = editorToHtml;
+  const result = str.split("???");
+  const content = result[0] + "$%&123" + answer + "$%&123" + result[1];
   const categories = "categories";
   const problem = "problem";
 
   const onEditorStateChange = (editorState) => {
-    // editorState에 값 설정
     setEditorState(editorState);
   };
 
-  //카테고리 데이터
-  const [categoryData, setCategoryData] = useState();
-
-  // - 명칭: save Problem
-  // - url: '/categories/{categoryId}/problems'
-  // - url 예시: 'http://localhost:8080/categories/3/problems'
-  // - method: POST
-  // - 내용: 선택한 카테고리에서 신규 문제 생성.
-  // - 토큰 담긴 헤더 필수 유무: O
-  // - 참고: 제대로 생성되는지 확인용으로 반환값을 만들어두었지만, 이는 프론트단에서는 딱히 쓸모가없을것임.
-
-  // - 입력해야할 json 예시:
-  // {
-  //     "type": 2,
-  //     "title": "문제 제목이지요",
-  //     "content": "가나다라$%&123마바$%&123사아자차"
-  // }
-
-  // - 반환되는 json 예시:
-  // {
-  //     "id": 2,
-  //     "type": 2,
-  //     "title": "문제 제목이지요",
-  //     "content": "가독성을 위해 문제내용은 생략하여 응답함.",
-  //     "user": {
-  //         "solvableCount": 5,
-  //         "id": 2,
-  //         "loginId": "테스트아디2",
-  //         "loginPw": null,
-  //         "username": "테스트이름2",
-  //         "authority": null
-  //     },
-  //     "category": {
-  //         "id": 3,
-  //         "name": "빅데이터",
-  //         "image": "ARER"
-  //     }
-  // }
-
   async function saveProblem() {
-    await axios
-      .post(`/categories/${writeId}/problems`, {
-        type: writeId,
+    try {
+      const response = await axios.post(``, {
+        type: parseInt(writeId, 10),
         title: title,
         content: content,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((response) => {
-        console.log((error) => {
-          console.log(error);
-        });
       });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
-
-  const getCategoryNumber = (categoryName) => {
-    if (categoryName == "운영체제") return 1;
-    else return 2;
-  };
 
   return (
     <Wrapper>
@@ -217,13 +152,12 @@ function TestEditorForm(props) {
         /> */}
         <hr />
         <Buttons
-          onSubmit={saveProblem}
-          title="문제 작성하기"
-          onClick={() => {
-            saveProblem();
-            navigate(-1);
-          }}
-        />
+        title="문제 작성하기"
+        onClick={async () => {
+          await saveProblem();
+          navigate(-1);
+        }}
+      />
         {/* dangerouslySetInnerHTML: https://ko.reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml */}
         <IntroduceContent dangerouslySetInnerHTML={{ __html: editorToHtml }} />
       </MyBlock>

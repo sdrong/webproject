@@ -34,7 +34,7 @@ const Mkproblem = styled.textarea`
   border-radius: 4px;
 `;
 
-function Update_CommentPage(props) {
+function UpdateCommentPage(props) {
   // useEffect(() => {
   //   getComment();
   // }, []);
@@ -124,4 +124,4 @@ function Update_CommentPage(props) {
   );
 }
 
-export default Update_CommentPage;
+export default UpdateCommentPage;

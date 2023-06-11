@@ -276,19 +276,6 @@ function PostViewPage3(props) {
     setAnswer(selectedAnswerIndex.toString());
   };
 
-  const [good, setGood] = useState(post.recommendCount);
-  const userid = 2;
-  const isRecommended = post.recommendUsers.includes(userid);
-  const handleGoodClick = (e) => {
-    e.stopPropagation(); // 부모 div로의 이벤트 전파 방지
-    if (!isRecommended) {
-      setGood(good + 1);
-      // 백엔드 업데이트 또는 추천으로 표시하는 요청 전송
-      // 예: sendRecommendation(commentId);
-    }
-  };
-
-
   return (
     <Wrapper>
       <Container>
@@ -303,15 +290,6 @@ function PostViewPage3(props) {
           title="댓글보기"
           onClick={() => navigate(`/problems/${problemId}/comments`)}
         />
-        <h4>
-          <span
-            onClick={handleGoodClick}
-            style={{ cursor: isRecommended ? "not-allowed" : "pointer" }}
-          >
-            👍
-          </span>
-          {good}
-        </h4>
 
         <br />
         <Buttons title="삭제" />

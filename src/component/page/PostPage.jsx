@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, Link, Route } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 import PostList from "../list/PostList";
 import Buttons from "../ui/Buttons";
-import MainList from "../list/MainList";
-import { ListGroup } from "react-bootstrap";
-import axios from "axios";
-import data from "../../data.json";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -37,25 +34,17 @@ const RadioLabel = styled.label`
   margin-right: 16px;
 `;
 
-function PostPage(props) {
-  useEffect(() => {
-    getCategory();
-  }, []);
-
+function PostPage() {
   const navigate = useNavigate();
   const { mainId } = useParams();
   const mainIdInt = parseInt(mainId, 10);
   const [selectedOption, setSelectedOption] = useState("빈칸"); // 라디오 선택 머했는지
 
-  const problemList = data.filter((item) => {
-    return item.category.id === mainIdInt;
-  });
-
   const handleRadioChange = (option) => {
     setSelectedOption(option);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (selectedOption === "빈칸") {
       navigate(`/post-write1/${mainId}`);
     } else if (selectedOption === "서술형") {
@@ -63,29 +52,36 @@ function PostPage(props) {
     } else if (selectedOption === "객관식") {
       navigate(`/post-write3/${mainId}`);
     }
+  
+    // 문제 작성 후 데이터를 가져와서 화면 갱신
+    await getCategory();
   };
 
-  const { categoryData, setCateogryData } = useState();
-  const categoryId = categoryData.id;
+  const [categoryData, setCategoryData] = useState();
+  const [categoryId, setCategoryId] = useState();
+
+  useEffect(() => {
+    getCategory();
+  }, []);
+
+  
 
   async function getCategory() {
-    await axios
-      .get("/categories" + "/" + { mainId } + "/" + "problems")
-      .then((response) => {
-        console.log(response.data);
-        setCateogryData(response.data);
-        categoryId = categoryData.id;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await axios.get(`/categories/${mainId}/problems`);
+      console.log(response.data);
+      setCategoryData(response.data);
+      setCategoryId(response.data.id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <Wrapper>
       <Container>
         <Buttons title="뒤로 가기" onClick={() => navigate(`/categories`)} />
-        <PostList posts={problemList} onClickItem={(item) => {}} />
+        <PostList posts={categoryData} onClickItem={(item) => {}} />
         <RadioContainer>
           <RadioLabel>
             <input
@@ -121,6 +117,8 @@ function PostPage(props) {
         <Buttons title="글 작성하기" onClick={handleButtonClick} />
       </Container>
     </Wrapper>
+ 
+
   );
 }
 

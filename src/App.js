@@ -1,12 +1,6 @@
-import React, {useState, useEffect} from "react";
-import {
-    BrowserRouter,
-    Routes,
-    Route,
-    NavLink
-} from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import styled from "styled-components";
-// Pages
 import MainPage from "./component/page/MainPage";
 import PostPage from "./component/page/PostPage";
 import PostWritePage1 from './component/page/PostWritePage1';
@@ -17,7 +11,6 @@ import PostViewPage2 from "./component/page/PostViewPage2";
 import PostViewPage3 from "./component/page/PostViewPage3";
 import CommentPage from "./component/page/CommentPage";
 import UpdateCommentPage from "./component/page/UpadataCommentPage";
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createGlobalStyle } from 'styled-components';
 import LoginPage from "./component/page/LoginPage";
@@ -29,17 +22,17 @@ const MainTitleBox = styled.div`
 `;
 
 const MainTitleText = styled(NavLink)`
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    display: block;
-    color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  color: white;
 `;
 
 const CustomTitleText = styled(MainTitleText)`
-    font-size: 30px;
-    color: blue;
+  font-size: 30px;
+  color: blue;
 `;
 
 const GlobalStyle = createGlobalStyle`
@@ -50,7 +43,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
 const AppContainer = styled.div`
   max-width: 800px;
   margin: 0 auto;
@@ -58,18 +50,7 @@ const AppContainer = styled.div`
 `;
 
 function App(props) {
-  // const baseUrl = "http://localhost:3000";
-  // const categories = "categories";
-  // const problem = "problem";
-
-  // const [title, setTitle] = useState();
-  // const [post, setPost] = useState();
-  // const [category, setCategory] = useState();
-  // const [postNumber, setPostNumber] = useState();
-  
-  // // // spring과 통신하는 부분
-
-   return (
+  return (
     <>
       <GlobalStyle />
       <BrowserRouter>
@@ -88,10 +69,11 @@ function App(props) {
             <Route path="/problems2/:problemId" element={<PostViewPage2 />} />
             <Route path="/problems3/:problemId" element={<PostViewPage3 />} />
             <Route path="/problems/:problemId/comments" element={<CommentPage />} />
-            <Route path="/comments/:commentId" element={<Update_CommentPage />} />
+            <Route path="/comments/:commentId" element={<UpdateCommentPage />} />
             <Route path="/login" element = {<LoginPage/>}/>
         <Route path="/signup" element = {<SignupPage/>}/>
           </Routes>
+          
         </AppContainer>
       </BrowserRouter>
     </>

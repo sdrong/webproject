@@ -94,36 +94,41 @@ function PostViewPage(props) {
     setIsEditMode(!isEditMode);
   }
 
-  // 맨 처음에 데이터 가져와서 저장하는 부분
   const [problem, setProblem] = useState();
-  //수정된 문제설명
-  const [modifiedProblem, setModifiedProblem] = useState(
-    result[0] + "???" + result[2]
-  );
+// 수정된 문제설명
+const [modifiedProblem, setModifiedProblem] = useState(result[0] + "???" + result[2]);
+// 수정된 제목
+const [modifiedTitle, setModifiedTitle] = useState();
+// 수정된 정답
+const [modifiedAnswer, setModifiedAnswer] = useState(anw);
+// 수정된 content
+const [modifiedContent, setModifiedContent] = useState();
 
-  //수정된 제목
-  const [modifiedTitle, setModifiedTitle] = useState(problem.title);
-  // 수정된 정답
-  const [modifiedAnswer, setModifiedAnswer] = useState(anw);
-  // 수정된 content
-  const [modifiedContent, setModifiedContent] = useState();
+// - url: '/problems/{problemId}'
+// - method: GET
+// - 설명: 선택한 문제 1개 조회.
+async function getProblem() {
+  await axios
+    .get(`/problems/${problemId}`)
+    .then((response) => {
+      setProblem(response.data);
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
 
-  // - url: '/problems/{problemId}'
-  // - method: GET
-  // - 설명: 선택한 문제 1개 조회.
-
-  async function getProblem() {
-    await axios
-      .get(`/problems/${problemId}`)
-      .then((response) => {
-        setProblem(response.data);
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+useEffect(() => {
+  if (problem) {
+    setModifiedTitle(problem.title);
   }
+}, [problem]);
 
+// getProblem 함수 호출
+getProblem();
+
+  
   // - 명칭: find User By Id
   // - url: '/users/{userId}'
   // - url 예시: 'http://localhost:8080/users/3'
@@ -137,11 +142,10 @@ function PostViewPage(props) {
   //     "username": "테스트이름3",
   //     "solvableCount": 5
   // }
-
   const [userInfo, setUserInfo] = useState();
   async function findUserById() {
     await axios
-      .get(`http://localhost:8080/users/${userInfo.id}`)
+      .get(`/users/${userInfo.id}`)
       .then((response) => {
         setUserInfo(response.data);
         console.log(response.data);
@@ -150,6 +154,7 @@ function PostViewPage(props) {
         console.log(err);
       });
   }
+  
 
   // - 명칭(내가 붙인 이름이니까 신경안쓰고 참고만 하면됨): update Solvable
   // - url: '/users/{userId}'
@@ -252,18 +257,6 @@ function PostViewPage(props) {
     }
   }
 
-  const [good, setGood] = useState(post.recommendCount);
-  const userid = 2;
-  const isRecommended = post.recommendUsers.includes(userid);
-  const handleGoodClick = (e) => {
-    e.stopPropagation(); // 부모 div로의 이벤트 전파 방지
-    if (!isRecommended) {
-      setGood(good + 1);
-      // 백엔드 업데이트 또는 추천으로 표시하는 요청 전송
-      // 예: sendRecommendation(commentId);
-    }
-  };
-
 
   return (
     // 단답형 문제
@@ -274,15 +267,6 @@ function PostViewPage(props) {
           title="댓글보기"
           onClick={() => navigate(`/problems/${problemId}/comments`)}
         />
-        <h4>
-          <span
-            onClick={handleGoodClick}
-            style={{ cursor: isRecommended ? "not-allowed" : "pointer" }}
-          >
-            👍
-          </span>
-          {good}
-        </h4>
         <br />
         <Buttons title="삭제" />
         <hr />
@@ -333,33 +317,29 @@ function PostViewPage(props) {
             <hr />
           </>
         ) : (
-          <Buttons title="수정" onClick={toggleEditMode()} />
+          <Buttons title="수정" onClick={toggleEditMode} />
         )}
         {true &&
           ["Success"].map((variant) => (
-            <Card
-               bg="gray"
-            key={variant}
-            text="black"
-            className="mb-2"
-            >
-              <Card.Header>{problem.title}</Card.Header>
-              <Card.Body>
-                <Card.Text>
-                  <PostContainer>
-                    <ContentText>{result[0]}</ContentText>
-                    <TextInput
-                      height={40}
-                      value={answer}
-                      onChange={(event) => {
-                        setAnswer(event.target.value);
-                      }}
-                    />
-                    <ContentText>{result[2]}</ContentText>
-                  </PostContainer>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            <Card bg="gray" text="black" className="mb-2">
+  <Card.Header>{problem.title}</Card.Header>
+  <Card.Body>
+    <Card.Text>
+      <PostContainer>
+        <ContentText>{result[0]}</ContentText>
+        <TextInput
+          height={40}
+          value={answer}
+          onChange={(event) => {
+            setAnswer(event.target.value);
+          }}
+        />
+        <ContentText>{result[2]}</ContentText>
+      </PostContainer>
+    </Card.Text>
+  </Card.Body>
+</Card>
+
           ))}
         <hr></hr>
         <Buttons
