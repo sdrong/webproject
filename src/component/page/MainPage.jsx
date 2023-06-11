@@ -78,20 +78,20 @@ function MainPage(props) {
   return (
     <Wrapper>
       <Container>
-        <Buttons
-          onClickItem={(item) => {
-            navigate(`/login`);
+        <Button
+          onClick={() => {
+            navigate("/login");
           }}
         >
           로그인
-        </Buttons>
-        <Buttons
-          onClickItem={(item) => {
-            navigate(`/signup`);
+        </Button>
+        <Button
+          onClick={() => {
+            navigate("/signup");
           }}
         >
           회원가입
-        </Buttons>
+        </Button>
         <MainList
           //과목 목록
           posts={categoryData}

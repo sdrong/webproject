@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -10,6 +10,8 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import data from "../../data.json";
+import CheckToeken from "../../utils/CheckToken";
+import CheckToken from "../../utils/CheckToken";
 
 const Wrapper = styled.div`
   padding: 16px;
@@ -74,20 +76,24 @@ const BottomMargin = styled.div`
 `;
 
 function TestEditorForm(props) {
+  useEffect(() => {
+    CheckToken();
+  }, []);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const editorToHtml = draftToHtml(
     convertToRaw(editorState.getCurrentContent())
   );
   const navigate = useNavigate();
-  const { writeId } = useParams();
-  const problemIdInt = parseInt(writeId, 10);
+  const [writeId] = useParams();
+  // const problemIdInt = parseInt(writeId, 10);
   const [answer, setAnswer] = useState("");
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [secret, setSecret] = useState("");
   const str = editorToHtml;
-  const result = str.split("???");
-  const content = result[0] + "$%&123" + answer + "$%&123" + result[1];
+  const [result, setResult] = useState();
+  const [content, setContent] = useState();
+  // const content = result[0] + "$%&123" + answer + "$%&123" + result[1];
   const categories = "categories";
   const problem = "problem";
 
@@ -95,9 +101,25 @@ function TestEditorForm(props) {
     setEditorState(editorState);
   };
 
+  /*
+  - 명칭(내가 붙인 이름이니까 신경안쓰고 참고만 하면됨): save Problem
+- url: '/categories/{categoryId}/problems'
+- url 예시: 'http://localhost:8080/categories/3/problems'
+- method: POST
+- 내용: 선택한 카테고리에서 신규 문제 생성.
+- 토큰 담긴 헤더 필수 유무: O
+- 참고: 제대로 생성되는지 확인용으로 반환값을 만들어두었지만, 이는 프론트단에서는 딱히 쓸모가없을것임.
+
+- 입력해야할 json 예시:
+{
+    "type": 2,
+    "title": "문제 제목이지요",
+    "content": "가나다라$%&123마바$%&123사아자차"
+}
+  */
   async function saveProblem() {
     try {
-      const response = await axios.post(``, {
+      const response = await axios.post(`/categories/${writeId}/problems`, {
         type: parseInt(writeId, 10),
         title: title,
         content: content,
@@ -152,12 +174,13 @@ function TestEditorForm(props) {
         /> */}
         <hr />
         <Buttons
-        title="문제 작성하기"
-        onClick={async () => {
-          await saveProblem();
-          navigate(-1);
-        }}
-      />
+          title="문제 작성하기"
+          onClick={async () => {
+            setContent(result[0] + "$%&123" + answer + "$%&123" + result[1]);
+            await saveProblem();
+            navigate(-1);
+          }}
+        />
         {/* dangerouslySetInnerHTML: https://ko.reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml */}
         <IntroduceContent dangerouslySetInnerHTML={{ __html: editorToHtml }} />
       </MyBlock>

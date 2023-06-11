@@ -35,6 +35,9 @@ const RadioLabel = styled.label`
 `;
 
 function PostPage() {
+  useEffect(() => {
+    getCategory();
+  }, []);
   const navigate = useNavigate();
   const { mainId } = useParams();
   const mainIdInt = parseInt(mainId, 10);
@@ -52,7 +55,7 @@ function PostPage() {
     } else if (selectedOption === "객관식") {
       navigate(`/post-write3/${mainId}`);
     }
-  
+
     // 문제 작성 후 데이터를 가져와서 화면 갱신
     await getCategory();
   };
@@ -60,11 +63,67 @@ function PostPage() {
   const [categoryData, setCategoryData] = useState();
   const [categoryId, setCategoryId] = useState();
 
-  useEffect(() => {
-    getCategory();
-  }, []);
-
+  /*
   
+- 명칭(내가 붙인 이름이니까 신경안쓰고 참고만 하면됨): category Load Problems
+- url: '/categories/{categoryId}/problems'
+- url 예시: 'http://localhost:8080/categories/3/problems'
+- method: GET
+- 내용: 선택한 카테고리가 가진 모든 문제들 목록을 최신 생성순으로 정렬하여 조회.
+- 토큰 담긴 헤더 필수 유무: X
+
+- 반환되는 json 예시:
+[
+    {
+        "id": 3,
+        "type": 2,
+        "title": "문제 제목이지요",
+        "content": "가나다라$%&123마바$%&123사아자차",
+        "recommendCount": 0,
+        "recommendUsers": [],
+        "solveUsers": [],
+        "user": {
+            "solvableCount": 5,
+            "id": 1,
+            "loginId": "테스트아디1",
+            "loginPw": null,
+            "username": "테스트이름1",
+            "authority": null
+        },
+        "category": {
+            "id": 3,
+            "name": "빅데이터",
+            "image": "ARER"
+        }
+    },
+    {
+        "id": 1,
+        "type": 2,
+        "title": "수정된 문서 제목이지요",
+        "content": "수정일$12수정이$12수정삼",
+        "recommendCount": 1,
+        "recommendUsers": [
+            2
+        ],
+        "solveUsers": [
+            2
+        ],
+        "user": {
+            "solvableCount": 5,
+            "id": 1,
+            "loginId": "테스트아디1",
+            "loginPw": null,
+            "username": "테스트이름1",
+            "authority": null
+        },
+        "category": {
+            "id": 3,
+            "name": "빅데이터",
+            "image": "ARER"
+        }
+    }
+]
+  */
 
   async function getCategory() {
     try {
@@ -117,8 +176,6 @@ function PostPage() {
         <Buttons title="글 작성하기" onClick={handleButtonClick} />
       </Container>
     </Wrapper>
- 
-
   );
 }
 

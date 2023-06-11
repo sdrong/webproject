@@ -73,13 +73,6 @@ function SignupPage() {
       });
   }
 
-  const handleChange = (e) => {
-    // <- input값으로 text 변경 함수
-    this.setState({
-      text: e.target.value,
-    });
-  };
-
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedExpirationDate = localStorage.getItem("expirationTime") || "0";
@@ -109,7 +102,9 @@ function SignupPage() {
     <div class="row">
       <div class="col">
         <input
-          onChange={this.handleChange}
+          onChange={() => {
+            setUserId();
+          }}
           id="userId"
           type="text"
           class="form-control"
@@ -119,7 +114,9 @@ function SignupPage() {
       </div>
       <div class="col">
         <input
-          onChange={this.handleChange}
+          onChange={() => {
+            setUserPw();
+          }}
           id="userPassword"
           type="text"
           class="form-control"

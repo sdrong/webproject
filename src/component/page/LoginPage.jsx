@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
 
-
 function LoginPage() {
   // - url: '/login'
   // - url 예시: 'http://localhost:8080/login'
@@ -75,12 +74,12 @@ function LoginPage() {
       });
   }
 
-  const handleChange = (e) => {
-    // <- input값으로 text 변경 함수
-    this.setState({
-      text: e.target.value,
-    });
-  };
+  // const handleChange = (e) => {
+  //   // <- input값으로 text 변경 함수
+  //   this.setState({
+  //     text: e.target.value,
+  //   });
+  // };
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -111,7 +110,9 @@ function LoginPage() {
     <div class="row">
       <div class="col">
         <input
-          onChange={this.handleChange}
+          onChange={() => {
+            setUserId();
+          }}
           id="userId"
           type="text"
           class="form-control"
@@ -121,7 +122,9 @@ function LoginPage() {
       </div>
       <div class="col">
         <input
-          onChange={this.handleChange}
+          onChange={() => {
+            setUserPw();
+          }}
           id="userPw"
           type="text"
           class="form-control"
@@ -129,7 +132,13 @@ function LoginPage() {
           aria-label="password"
         />
       </div>
-      <button type="button" class="btn btn-info" onClick={postUsreInfo()}>
+      <button
+        type="button"
+        class="btn btn-info"
+        onClick={() => {
+          postUsreInfo();
+        }}
+      >
         제출
       </button>
     </div>
