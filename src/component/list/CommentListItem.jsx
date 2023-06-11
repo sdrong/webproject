@@ -15,12 +15,14 @@ function CommentListItem(props) {
       setGood(good + 1);
       // Update the backend or send a request to mark the comment as recommended
       // For example: sendRecommendation(commentId);
+
     }
   };
 
   return (
     <Card
       border="success"
+      bg="gray" text="black"
       style={{
         width: "100%",
         display: "inline-block"
