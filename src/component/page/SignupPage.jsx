@@ -124,6 +124,18 @@ function SignupPage() {
           aria-label="password"
         />
       </div>
+      <div class="col">
+        <input
+          onChange={() => {
+            setUsername();
+          }}
+          id="username"
+          type="text"
+          class="form-control"
+          placeholder="username"
+          aria-label="username"
+        />
+      </div>
       <button
         type="button"
         class="btn btn-info"
